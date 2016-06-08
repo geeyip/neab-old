@@ -1,5 +1,5 @@
 # neab
-## Main technology
+Main technology
 * node
 * express 4.x
 * angular 1.5
