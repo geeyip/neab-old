@@ -60,6 +60,9 @@
     </div><!-- /.container-fluid -->
 </nav>
 {% endblock %}
+<div class="messages">
+    {% include 'messages.html' %}
+</div>
 {% block content %}{% endblock %}
 {% block footer %}
 <div class="footer navbar-fixed-bottom container text-center">
@@ -70,5 +73,6 @@
 {% block script %}
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/base.js"></script>
 {% endblock %}
 </html>

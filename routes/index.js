@@ -1,8 +1,9 @@
 var express = require('express');
 var db = require('./../database/db.js');
 var router = express.Router();
-var session = require('express-session');
-/* GET home page. */
+var User = require('./../database/model/User').User;
+
+
 router.get('/', function(req, res, next) {
 
     db.open(function(err, db){
@@ -28,19 +29,25 @@ router.get('/', function(req, res, next) {
 
 router.route('/login')
 .get(function(req, res){
-  res.render('login', {title: '登录'});
+  res.render('login', {title: '登录', username: req.flash('username')});
 })
 .post(function(req, res){
       var user={
         username: 'admin',
         password: '123456'
       }
-      if(req.body.username === user.username && req.body.password === user.password){
-          req.session.user = user;
-          res.redirect('/home');
-      }else{
-          res.redirect('/login');
-      }
+
+        User.findOne({username: req.body.username, password:req.body.password}, function(err,user){
+            if(user){
+                req.session.user = user;
+                req.flash('success', ['登录成功','欢迎您！'+user.username]);
+                res.redirect('/home');
+            }else{
+                req.flash('error', '用户名或密码错误');
+                req.flash('username', req.body.username);
+                res.redirect('/login');
+            }
+        });
 });
 
 router.get('/logout', function(req, res){
@@ -49,6 +56,30 @@ router.get('/logout', function(req, res){
 });
 
 router.get('/home', function(req, res){
-  res.render('home', {title: '工作台', user: req.session.user});
+  res.render('home', {title: '工作台'});
 });
+
+
+router.route('/register')
+.get(function(req, res){
+    res.render('register', {title: '注册', user: req.flash('user')});
+})
+.post(function(req, res){
+    var user = req.body;
+        console.log(user);
+    if(user.password == user.password2){
+        user = new User(user);
+        user.save(function(err){
+            if(err){
+                res.json({flag:0,msg:err});
+            }else{
+                res.json({flag:1});
+            }
+        });
+    }else{
+        res.json({flag:0,msg:'2次密码不一样'});
+    }
+});
+
+
 module.exports = router;
