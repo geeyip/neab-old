@@ -5,26 +5,13 @@ var User = require('./../database/model/User').User;
 
 
 router.get('/', function(req, res, next) {
-
-    db.open(function(err, db){
-        if(!err){
-            console.log('connect');
-            db.collection('person',{safe:true}, function(err, col){
-                if(err){
-                    console.log(err);
-                }
-                col.find().toArray(function(err,docs){
-                    res.render('index', { title: '首页',persons: docs });
-                });
-
-            })
-
-        }else{
+    User.find(function(err,users){
+        if(err){
             console.log(err);
         }
+        console.log(users);
+        res.render('index', { title: '首页',users: users });
     });
-
-
 });
 
 router.route('/login')
@@ -32,22 +19,17 @@ router.route('/login')
   res.render('login', {title: '登录', username: req.flash('username')});
 })
 .post(function(req, res){
-      var user={
-        username: 'admin',
-        password: '123456'
-      }
-
-        User.findOne({username: req.body.username, password:req.body.password}, function(err,user){
-            if(user){
-                req.session.user = user;
-                req.flash('success', ['登录成功','欢迎您！'+user.username]);
-                res.redirect('/home');
-            }else{
-                req.flash('error', '用户名或密码错误');
-                req.flash('username', req.body.username);
-                res.redirect('/login');
-            }
-        });
+    User.findOne({username: req.body.username, password:req.body.password}, function(err,user){
+        if(user){
+            req.session.user = user;
+            req.flash('success', ['欢迎您！'+user.username]);
+            res.redirect('/home');
+        }else{
+            req.flash('error', '用户名或密码错误');
+            req.flash('username', req.body.username);
+            res.redirect('/login');
+        }
+    });
 });
 
 router.get('/logout', function(req, res){
@@ -65,20 +47,14 @@ router.route('/register')
     res.render('register', {title: '注册', user: req.flash('user')});
 })
 .post(function(req, res){
-    var user = req.body;
-        console.log(user);
-    if(user.password == user.password2){
-        user = new User(user);
-        user.save(function(err){
-            if(err){
-                res.json({flag:0,msg:err});
-            }else{
-                res.json({flag:1});
-            }
-        });
-    }else{
-        res.json({flag:0,msg:'2次密码不一样'});
-    }
+    var user = new User(req.body);
+    user.save(function(err){
+        if(err){
+           console.log(err);
+        }
+        req.flash('info', '注册成功');
+        res.redirect('/login');
+    });
 });
 
 

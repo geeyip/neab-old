@@ -3,19 +3,18 @@
 {% endblock%}
 {% block content %}
 <div class="container">
-<h1>welcome to {{title}}</h1>
-
+<h1> {{title}}</h1>
+<hr>
 <p><a class="btn btn-default" href="/login">登录</a>
 <a class="btn btn-default" href="/register">注册</a></p>
-    <ul>
-
-        {% for person in persons %}
-        <li>
-        {{ person | json}}
-        </li>
-        {% endfor %}
-
-    </ul>
+   <table class="table table-bordered table-hover">
+       {% for user in users %}
+       <tr>
+           <td>{{user.username}}</td>
+           <td>{{user.email}}</td>
+       </tr>
+       {% endfor %}
+   </table>
 
 </div>
 {% endblock %}
