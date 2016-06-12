@@ -16,6 +16,9 @@ mongoose.connection.once('open', function (callback) {
   console.log('connect to mongodb success');
 });
 
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
@@ -37,34 +40,30 @@ app.use(flash());
 app.use(session({
    secret: 'geeyip',
    cookie: {maxAge: 600000 },
-   resave: true,
+   resave: false,
    saveUninitialized: false,
   store: new MongoStore({   //创建新的mongodb数据库
       url: 'mongodb://localhost/nodedb',
       ttl: 600
   })
-
 }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+var Account = require('./models/account');
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
+
 
 app.use(function(req, res, next){
-  res.locals.user = req.session.user;
-
+  res.locals.user = req.user;
   res.locals.info =  req.flash('info');
   res.locals.error = req.flash('error');
   res.locals.success = req.flash('success');
   res.locals.warning = req.flash('warning');
 
   next();
-});
-
-
-app.use(function(req,res,next){
-  console.log(req.path);
-  if(req.session.user || req.path == '/login' || req.path == '/register' || req.path == '/'){
-    next();
-  }else{
-    res.redirect('/login');
-  }
 });
 
 
