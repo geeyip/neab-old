@@ -39,13 +39,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
 app.use(session({
    secret: 'geeyip',
-   cookie: {maxAge: 600000 },
+   //cookie: {maxAge: 60000 },
    resave: false,
-   saveUninitialized: false,
-  store: new MongoStore({   //创建新的mongodb数据库
-      url: 'mongodb://localhost/nodedb',
-      ttl: 600
-  })
+   saveUninitialized: false
+  //store: new MongoStore({   //创建新的mongodb数据库
+  //    url: 'mongodb://localhost/nodedb',
+  //    ttl: 600
+  //})
 }));
 app.use(passport.initialize());
 app.use(passport.session());
