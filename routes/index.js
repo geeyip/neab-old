@@ -1,36 +1,21 @@
 var express = require('express');
-var db = require('./../database/db.js');
 var router = express.Router();
-var User = require('./../database/model/User').User;
 var Account = require('../models/account');
 var passport = require('passport');
 var sureLogin = require('connect-ensure-login');
+
 router.get('/', sureLogin.ensureLoggedIn(), function(req, res, next) {
-    User.find(function(err,users){
-        if(err){
-            console.log(err);
-        }
-        console.log(users);
-        res.render('index', { title: '首页',users: users });
+    Account.find(function(err, users){
+        res.render('index', { title: '用户列表', users: users});
     });
+
 });
 
-router.route('/login')
-.get(function(req, res){
-        res.render('login', { username : req.flash('username') });
-
-       // res.render('login', {title: '登录', username: req.flash('username')});
+router.get('/login', function(req, res){
+    res.render('login', { username : req.flash('username') });
 })
-//.post(passport.authenticate('local', {
-//        failureRedirect: '/login',
-//        failureFlash: '用户名与密码不匹配',
-//        successFlash: '欢迎回来'
-//    }), function(req, res){
-//        res.redirect(req.session.returnTo);
-//    }
-//);
 
-.post(function(req, res, next) {
+router.post('/login', function(req, res, next) {
     passport.authenticate('local',function(err, user, info) {
         if (err) {
             return next(err);
@@ -50,33 +35,19 @@ router.route('/login')
     })(req, res, next);
 });
 
-
-
-
-
 router.get('/logout', function(req, res){
     req.logout();
     res.redirect('/');
 });
 
-router.get('/home', sureLogin.ensureLoggedIn(), function(req, res){
-  res.render('home', {title: '工作台'});
+router.get('/profile', sureLogin.ensureLoggedIn(), function(req, res){
+  res.render('profile', {title: '个人信息'});
 });
 
-
-router.route('/register')
-.get(function(req, res){
+router.get('/register', function(req, res){
     res.render('register', {});
-})
-.post(function(req, res){
-    //var user = new User(req.body);
-    //user.save(function(err){
-    //    if(err){
-    //       console.log(err);
-    //    }
-    //    req.flash('info', '注册成功');
-    //    res.redirect('/login');
-    //});
+});
+router.post('/register', function(req, res){
     Account.register(new Account({ username : req.body.username,email: req.body.email }), req.body.password, function(err, account) {
         if (err) {
             console.log(err);
@@ -91,8 +62,6 @@ router.route('/register')
             });
         });
     });
-
-    });
-
+ });
 
 module.exports = router;
