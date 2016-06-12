@@ -56,14 +56,14 @@ passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
 
+var sureLogin = require('connect-ensure-login');
 app.use(function(req, res, next){
   res.locals.user = req.user;
   res.locals.info =  req.flash('info');
   res.locals.error = req.flash('error');
   res.locals.success = req.flash('success');
   res.locals.warning = req.flash('warning');
-
-  next();
+  return next();
 });
 
 
