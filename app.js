@@ -9,6 +9,7 @@ var flash = require('connect-flash');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var settings = require('./db/settings');
+var outAuth = require('./db/outAuth.json');
 var mongoose = require('mongoose');
 mongoose.connect(settings.url);
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
@@ -20,7 +21,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 var routes = require('./routes/index');
-
+var users = require('./routes/users');
 var app = express();
 
 // view engine setup
@@ -37,8 +38,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
 app.use(session({
-   secret: 'geeyip',
-   //cookie: {maxAge: 60000 },
+   secret: 'geeyip.com',
+  // cookie: {maxAge: 1000*60*30 },
+  // rolling: true,
    resave: false,
    saveUninitialized: false
   //store: new MongoStore({   //创建新的mongodb数据库
@@ -55,18 +57,28 @@ passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
 
 
-var sureLogin = require('connect-ensure-login');
-app.use(function(req, res, next){
+
+app.use(function(req, res, next) {
+  if (outAuth.indexOf(req.path) == -1){
+    if (!req.isAuthenticated || !req.isAuthenticated()) {
+      if (req.session) {
+        req.session.returnTo = req.originalUrl || req.url;
+      }
+      return res.redirect('/login');
+    }
+  }
   res.locals.user = req.user;
   res.locals.info =  req.flash('info');
   res.locals.error = req.flash('error');
   res.locals.success = req.flash('success');
   res.locals.warning = req.flash('warning');
-  return next();
+  next();
 });
 
 
+
 app.use('/', routes);
+app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
