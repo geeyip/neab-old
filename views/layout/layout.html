@@ -3,9 +3,9 @@
 <head lang="en">
     <meta charset="UTF-8">
     {% block css %}
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/style.css">
     {% endblock %}
     <title>{% block title %} 应用名称 | {{title}}{% endblock %}</title>
 </head>
@@ -49,6 +49,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="/profile">个人信息</a></li>
+                        <li><a href="/profile/password">修改密码</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="/logout">注销</a></li>
                     </ul>
@@ -71,12 +72,12 @@
 {% endblock %}
 </body>
 {% block script %}
-<script src="js/socket.io.js"></script>
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/parsley.min.js"></script>
-<script src="js/i18n/zh_cn.js"></script>
-<script src="js/garlic.min.js"></script>
-<script src="js/base.js"></script>
+<script src="/js/socket.io.js"></script>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/parsley.min.js"></script>
+<script src="/js/i18n/zh_cn.js"></script>
+<script src="/js/garlic.min.js"></script>
+<script src="/js/base.js"></script>
 {% endblock %}
 </html>

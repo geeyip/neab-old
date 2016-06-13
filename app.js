@@ -7,12 +7,14 @@ var bodyParser = require('body-parser');
 var swig = require('swig');
 var flash = require('connect-flash');
 var session = require('express-session');
-var MongoStore = require('connect-mongo')(session);
+//var MongoStore = require('connect-mongo')(session);
 var settings = require('./db/settings');
 var outAuth = require('./db/outAuth.json');
 var mongoose = require('mongoose');
 mongoose.connect(settings.url);
-mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
+mongoose.connection.on('error', function(err){
+  console.log(err);
+});
 mongoose.connection.once('open', function (callback) {
   console.log('connect to mongodb success');
 });
@@ -20,8 +22,7 @@ mongoose.connection.once('open', function (callback) {
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+
 var app = express();
 
 // view engine setup
@@ -52,10 +53,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 var Account = require('./models/account');
-passport.use(new LocalStrategy(Account.authenticate()));
+passport.use(Account.createStrategy());
 passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
-
 
 
 app.use(function(req, res, next) {
@@ -75,10 +75,9 @@ app.use(function(req, res, next) {
   next();
 });
 
-
-
-app.use('/', routes);
-app.use('/users', users);
+app.use('/', require('./routes/index'));
+app.use('/users', require('./routes/users'));
+app.use('/profile', require('./routes/profile'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Account = require('../models/account');
+var Account = require('mongoose').model('Account');
 var passport = require('passport');
 router.get('/', function(req, res, next) {
    res.redirect('users');
@@ -10,35 +10,17 @@ router.get('/login', function(req, res){
     res.render('login', {title:'登录', username : req.flash('username') });
 })
 
-router.post('/login', function(req, res, next) {
-    passport.authenticate('local',function(err, user, info) {
-        if (err) {
-            return next(err);
-        }
-        if (!user) {
-            req.flash('error','用户名与密码不匹配');
-            req.flash('username', req.body.username);
-            return res.redirect('/login');
-        }
-        req.logIn(user, function(err) {
-            if (err) {
-                return next(err);
-            }
-            //req.flash('success','欢迎回来');
-            var returnTo = req.session.returnTo;
-            if(returnTo == undefined) returnTo = '/';
-            return res.redirect(returnTo);
-        });
-    })(req, res, next);
-});
+router.post('/login',
+    passport.authenticate('local', { failureRedirect: '/login',failureFlash: true}),
+    function(req, res) {
+        var returnTo = req.session.returnTo;
+        if(returnTo == undefined) returnTo = '/';
+        res.redirect(returnTo);
+    });
 
 router.get('/logout', function(req, res){
     req.logout();
-    res.redirect('/');
-});
-
-router.get('/profile', function(req, res){
-  res.render('profile', {title: '个人信息'});
+    res.redirect('/login');
 });
 
 router.get('/register', function(req, res){
