@@ -23,7 +23,8 @@ Parsley.addMessages('zh-cn', {
   mincheck:       "请至少选择 %s 个选项",
   maxcheck:       "请选择不超过 %s 个选项",
   check:          "请选择 %s 到 %s 个选项",
-  equalto:        "输入值不同"
+  equalto:        "输入值不同",
+  userExistsError: "用户名已经存在"
 });
 
 Parsley.setLocale('zh-cn');

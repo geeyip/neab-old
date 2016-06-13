@@ -12,7 +12,7 @@ router.get('/', sureLogin.ensureLoggedIn(), function(req, res, next) {
 });
 
 router.get('/login', function(req, res){
-    res.render('login', { username : req.flash('username') });
+    res.render('login', {title:'登录', username : req.flash('username') });
 })
 
 router.post('/login', function(req, res, next) {
@@ -29,7 +29,7 @@ router.post('/login', function(req, res, next) {
             if (err) {
                 return next(err);
             }
-            req.flash('success','欢迎回来');
+            //req.flash('success','欢迎回来');
             return res.redirect(req.session.returnTo);
         });
     })(req, res, next);
@@ -45,7 +45,7 @@ router.get('/profile', sureLogin.ensureLoggedIn(), function(req, res){
 });
 
 router.get('/register', function(req, res){
-    res.render('register', {});
+    res.render('register', {title: '注册'});
 });
 router.post('/register', function(req, res){
     Account.register(new Account({ username : req.body.username,email: req.body.email }), req.body.password, function(err, account) {

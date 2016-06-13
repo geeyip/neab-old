@@ -3,7 +3,7 @@
 {% endblock %}
 {% block content %}
 <div class="container">
-    <form class="col-sm-offset-2 col-sm-8 form-horizontal"  data-parsley-validate method="post" id="loginForm">
+    <form class="col-sm-offset-2 col-sm-8 form-horizontal" data-persist="garlic" data-parsley-validate method="post" id="loginForm">
         <fieldset>
             <legend>用户登录</legend>
             <div class="form-group">
@@ -20,7 +20,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-9">
-                    <a href="/register" class="btn btn-default">注册</a>
+                    <a href="/register" class="btn btn-default">没有帐号？注册</a>
                     <button type="submit" class="btn btn-primary">登录</button>
                 </div>
             </div>

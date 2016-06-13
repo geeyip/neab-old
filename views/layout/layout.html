@@ -60,9 +60,11 @@
     </div><!-- /.container-fluid -->
 </nav>
 {% endblock %}
+{% block message %}
 <div class="messages" id="messages">
     {% include 'messages.html' %}
 </div>
+{% endblock %}
 {% block content %}{% endblock %}
 {% block footer %}
 <div class="footer navbar-fixed-bottom container text-center">
@@ -71,10 +73,12 @@
 {% endblock %}
 </body>
 {% block script %}
+<script src="js/socket.io.js"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/parsley.min.js"></script>
 <script src="js/i18n/zh_cn.js"></script>
+<script src="js/garlic.min.js"></script>
 <script src="js/base.js"></script>
 {% endblock %}
 </html>
