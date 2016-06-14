@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head lang="en">
+<head lang="zh">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     {% block css %}
@@ -15,7 +15,7 @@
     <title>{% block title %} 应用名称 | {{title}}{% endblock %}</title>
 </head>
 <body>
-<div class="">
+<div>
 {% block header %}
 <nav class="navbar navbar-default">
     <div class="container">
@@ -92,7 +92,6 @@
 <script src="/js/base.js"></script>
 <!--[if lt IE 9]>
 <script>
-   $('.btn').attr('disabled',"true");
    alert('系统检测到您的浏览器版本过低，请升级到IE9及以上版本！');
 </script>
 <![endif]-->
