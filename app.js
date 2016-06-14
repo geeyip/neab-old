@@ -22,11 +22,7 @@ require('./src/session')(app);
 require('./src/passport')(app);
 require('./src/logger')(app);
 require('./src/flash')(app);
-
-app.use('/', require('./routes/index'));
-app.use('/users', require('./routes/users'));
-app.use('/profile', require('./routes/profile'));
-
+require('./routes/main')(app);
 require('./src/error')(app);
 
 module.exports = app;
