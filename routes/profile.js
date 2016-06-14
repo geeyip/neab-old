@@ -21,7 +21,6 @@ router.post('/password', function(req, res) {
                 newPassUser.save(function(err){
                     if(err) console.log(err);
                     req.flash('success','密码修改成功，请重新登录');
-                    req.flash('username',req.user.username);
                     req.logout();
                     res.redirect('/login');
                 });

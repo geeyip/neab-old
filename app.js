@@ -59,6 +59,7 @@ passport.deserializeUser(Account.deserializeUser());
 
 
 app.use(function(req, res, next) {
+  //验证是否已经登录
   if (outAuth.indexOf(req.path) == -1){
     if (!req.isAuthenticated || !req.isAuthenticated()) {
       if (req.session) {
@@ -67,11 +68,21 @@ app.use(function(req, res, next) {
       return res.redirect('/login');
     }
   }
+
   res.locals.user = req.user;
   res.locals.info =  req.flash('info');
   res.locals.error = req.flash('error');
   res.locals.success = req.flash('success');
   res.locals.warning = req.flash('warning');
+
+  if(req.path == '/login'){
+    if(req.method == 'POST'){
+      req.session.username = req.body.username;
+    }else if(req.method == 'GET'){
+      req.flash('username', req.session.username)
+      req.session.username = null;
+    }
+  }
   next();
 });
 
@@ -81,9 +92,9 @@ app.use('/profile', require('./routes/profile'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+ // var err = new Error('Not Found');
+ // err.status = 404;
+  next();
 });
 
 // error handlers
