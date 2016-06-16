@@ -1,7 +1,7 @@
 var flash = require('connect-flash');
 
 /**
- * 页面提示
+ * 页面提示及信息传递
  * @param app
  */
 module.exports = function(app){
@@ -12,6 +12,12 @@ module.exports = function(app){
         res.locals.error = req.flash('error');
         res.locals.success = req.flash('success');
         res.locals.warning = req.flash('warning');
+
+        if(req.path == '/login' && req.method == 'POST'){
+            req.flash('username', req.body.username);
+        }
+
         next();
+
     });
 }

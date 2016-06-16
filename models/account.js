@@ -14,8 +14,8 @@ AccountSchema.plugin(passportLocalMongoose, {
         AttemptTooSoonError: '登录过于频繁，帐号被临时锁定，请稍后再试',
         TooManyAttemptsError: '登录失败次数过多，帐号已经被锁定，请联系管理员',
         UserExistsError: '用户已经存在',
-        MissingUsernameError: '登录未给定用户名',
-        MissingPasswordError: '登录未给定密码'
+        MissingUsernameError: '未给定用户名',
+        MissingPasswordError: '未给定密码'
     },
     limitAttempts: true,
     maxAttempts: 10,

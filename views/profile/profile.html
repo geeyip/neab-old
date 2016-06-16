@@ -1,29 +1,40 @@
 {% extends '../layout/layout.html' %}
 {% block content %}
-<div class="container">
-    <div class="container">
-        <form class="col-sm-offset-2 col-sm-8 form-horizontal">
-            <fieldset>
-                <legend>{{title}}</legend>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">用户名</label>
-                    <div class="col-sm-9">
-                      {{user.username}}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">邮箱</label>
-                    <div class="col-sm-9">
-                        {{user.email}}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-3">
-                      <a class="btn btn-default" href="/profile/password">修改密码</a>
-                    </div>
-                </div>
-            </fieldset>
-        </form>
-    </div>
+<div class="panel">
+<div class="panel-body">
+
+   <div class="list-group">
+      <a  class="list-group-item">
+         <div class="row">
+            <div class="col-sm-2">
+               <label class="control-label">用户名</label>
+            </div>
+            <div class="col-sm-10">
+               {{user.username}}
+            </div>
+         </div>
+      </a>
+      <a class="list-group-item">
+         <div class="row">
+            <div class="col-sm-2">
+               <label class="control-label">邮箱</label>
+            </div>
+            <div class="col-sm-10">
+               {{user.email}}
+            </div>
+         </div>
+        </a>
+      <a class="list-group-item">
+         <div class="row">
+            <div class="col-sm-2">
+               <label class="control-label">最近登录</label>
+            </div>
+            <div class="col-sm-10">
+               {{user.last | date('Y-m-d H:i:s',-480)}}
+            </div>
+         </div>
+      </a>
+   </div>
+</div>
 </div>
 {% endblock %}

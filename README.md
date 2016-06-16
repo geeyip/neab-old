@@ -1,8 +1,8 @@
 # neab
-Main technology
+主要技术
 
-* node, express
-* bootstrap, parsley
-* mongodb, mongoose
-* passport.js
-* ...
+* node + express
+* bootstrap + parsley + garlic
+* mongodb + mongoose
+* passport + acl
+* socket.io

@@ -1,6 +1,6 @@
 [
   "/login",
   "/logout",
-  "/register",
-  "/register/user/exits"
+  "/signup",
+  "/signup/user/exits"
 ]

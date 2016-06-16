@@ -1,15 +1,4 @@
 {% extends 'layout/layout.html' %}
 {% block content %}
-<div class="container">
-    <legend>{{title}}</legend>
-<table class="table table-bordered table-hover">
-   {% for user in users %}
-   <tr>
-       <td>{{user.username}}</td>
-       <td>{{user.email}}</td>
-   </tr>
-   {% endfor %}
-</table>
-
-</div>
+    欢迎您
 {% endblock %}

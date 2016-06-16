@@ -1,0 +1,27 @@
+{% extends '../layout/layout.html' %}
+{% block content %}
+<table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>角色ID</th>
+        <th>角色名</th>
+        <th>描述</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for role in roles %}
+    <tr>
+        <td>{{role.key}}</td>
+        <td>{{role.name}}</td>
+        <td>{{role.desc}}</td>
+        <td>
+            <a href="/roles/edit/{{role.key}}" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+            <a href="/roles/delete/{{role.key}}" onclick="if(confirm('确定删除?')==false)return false;" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<a href="/roles/add" class="btn btn-primary">新增角色</a>
+{% endblock %}

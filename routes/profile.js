@@ -6,11 +6,10 @@ router.get('/', function(req, res){
 });
 
 router.get('/password', function(req, res) {
-    Account.findOne({username: req.user.username}, function(err, user){
+    Account.findByUsername(req.user.username, function(err, user){
         res.render('profile/password-modify', {title: '密码修改', user: user})
     });
 });
-
 router.post('/password', function(req, res) {
     var user = new Account(req.user);
     user.authenticate(req.body.prePassword, function(err, result){
@@ -20,9 +19,8 @@ router.post('/password', function(req, res) {
                 if(err) console.log(err);
                 newPassUser.save(function(err){
                     if(err) console.log(err);
-                    req.flash('success','密码修改成功，请重新登录');
-                    req.logout();
-                    res.redirect('/login');
+                    req.flash('success','密码修改成功');
+                    res.redirect('/profile');
                 });
             });
         }else{
@@ -30,7 +28,6 @@ router.post('/password', function(req, res) {
             res.redirect('/profile/password');
         }
     });
+});
 
-
-})
 module.exports = router;

@@ -1,4 +1,4 @@
 {
-  "db_url": "mongodb://localhost:27017/nodedb",
+  "db_url": "mongodb://localhost:27017/neab",
   "session_secret": "7f3d32ea866df20a2bc45b895cab5179fc4e7a9b640b729dc526d9e9c77e5ce7"
 }

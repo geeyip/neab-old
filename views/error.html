@@ -1,14 +1,19 @@
 {% extends 'layout/layout.html' %}
 {% block title %} 应用名称 | {{error.status}}{% endblock %}
 {% block header %}
+{% parent %}
 {% endblock %}
+{% block path %}
+{% endblock%}
 {% block content %}
 <div class="container">
     <form class="col-sm-offset-2 col-sm-8 form-horizontal" data-persist="garlic" data-parsley-validate method="post" id="loginForm">
         <fieldset>
             <legend>{{ error.status }} > {{ message }}</legend>
             <div class="form-group">
+                {% if error.stack %}
                 <pre>{{ error.stack }}</pre>
+                {% endif %}
             </div>
         </fieldset>
     </form>
