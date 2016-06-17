@@ -6,7 +6,8 @@
 * mongodb + mongoose
 * passport + acl
 * socket.io
-* 
+
+
 MongoDB配置
 
 conf > setting.js 配置 db_url
