@@ -2,7 +2,12 @@
 主要技术
 
 * node + express
-* bootstrap + parsley + garlic
+* bootstrap + parsley
 * mongodb + mongoose
 * passport + acl
 * socket.io
+
+运行
+```shell
+ npm install && npm start
+``
