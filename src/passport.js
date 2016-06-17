@@ -26,6 +26,7 @@ module.exports = function(app){
     });
 
     //验证当前用户对资源是否有访问权限
+
     app.use(function(req, res, next) {
         var resource = req.path.split('/').slice(1,2).join('/');
         var permission = req.path.split('/').slice(2,3).join('/');
@@ -39,7 +40,7 @@ module.exports = function(app){
                 if(allowed){
                     next();
                 }else{
-                   // next();
+                    //next();
                    res.render('error', {
                         message: 'ACL 禁止访问资源',
                         error: {status: '401.3'}
