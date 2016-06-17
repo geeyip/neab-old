@@ -24,7 +24,6 @@
   http://localhost:3000
 ```
 启动后，`管理`下`用户`、`角色`、`资源` 都没有访问权限。为了能配置权限，需暂时修改 `conf/resource.json`文件。
-加入下面带注释部分
 ```javascript
 {
   "not_need_auth": [
@@ -35,20 +34,26 @@
   ],
   "not_need_grant": [
     "/profile",
-    "/profile/password",
-    "/users/eidt",  //用户修改
-    "/users/delete",//用户删除
-    "/users/roles", //用户选择角色
-    "/roles/add",    //角色新增
-    "/roles/edit",  //角色修改
-    "/roles/delete", //角色删除
-    "/roles/users"   //角色选择用户
-    "/roles/resources", //角色资源授权
-    "/resources/add",  //资源新增
-    "/resources/edit", //资源修改
-    "/resources/delete" //资源删除
+    "/profile/password"
   ]
 }
+```
+在数组`not_need_grant`中加入
+```url
+"/users",
+    "/users/edit",
+    "/users/delete",
+    "/users/roles",
+    "/roles",
+    "/roles/add",
+    "/roles/edit",
+    "/roles/delete",
+    "/roles/users",
+    "/roles/resources",
+    "/resources",
+    "/resources/add",
+    "/resources/edit",
+    "/resources/delete"
 ```
 配置完成后，恢复文件即可。
 
