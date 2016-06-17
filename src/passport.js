@@ -28,13 +28,18 @@ module.exports = function(app){
     //验证当前用户对资源是否有访问权限
 
     app.use(function(req, res, next) {
-        var resource = req.path.split('/').slice(1,2).join('/');
-        var permission = req.path.split('/').slice(2,3).join('/');
+        var pathArray = req.path.split('/');
+        var path = pathArray.slice(0,3).join('/');
+        var resource = pathArray.slice(1,2).join('/');
+        var permission = pathArray.slice(2,3).join('/');
+        console.log('访问URL是：' + path);
+        console.log('访问资源是：' + resource);
+        console.log('资源操作是：' + permission);
         permission = permission==''?resource:permission;
-        if (Resource["not_need_auth"].indexOf(req.path) == -1 && Resource["not_need_grant"].indexOf(req.path) == -1 && resource != '') {
+        if (Resource["not_need_auth"].indexOf(req.path) == -1
+            && Resource["not_need_grant"].indexOf(path) == -1
+            && resource != '') {
             var userId = req.user.username;
-            console.log('资源是：'+resource);
-            console.log('权限是：'+permission);
             ACL.isAllowed(userId, resource, permission, function(err, allowed){
                 console.log(allowed);
                 if(allowed){
