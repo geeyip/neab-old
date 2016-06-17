@@ -66,5 +66,5 @@
   /users/roles
    ```
   则资源和权限配置如下
-  ![](img/p0.png)
+  ![](https://raw.githubusercontent.com/geeyip/techMD/master/pic/p0.png)
 
