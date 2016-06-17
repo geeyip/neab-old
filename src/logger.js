@@ -18,9 +18,12 @@ module.exports = function(app){
     logger.token('username', function(req){
         return req.user?req.user.username:'';
     });
+    //app.use(logger('dev'));
     app.use(logger(':date :remote-addr :username :method :url :status :response-time',{
         skip: function(req, res){
             return req.user == undefined;
-        }
+        },
+        stream:accessLogStream
     }));
+
 }
