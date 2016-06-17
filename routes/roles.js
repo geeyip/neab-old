@@ -24,7 +24,6 @@ router.post('/add', function(req, res){
 router.get('/add/key_check', function(req, res){
     Role.findOne({key: req.query.key}, function(err, role){
         if(err) console.log(err);
-        console.log(role);
         if(role){
             res.writeHead(404);
             res.end();
@@ -37,7 +36,6 @@ router.get('/add/key_check', function(req, res){
 router.get('/add/name_check', function(req, res){
     Role.findOne({name: req.query.name}, function(err, role){
         if(err) console.log(err);
-        console.log(role);
         if(role){
             res.writeHead(404);
             res.end();
@@ -78,7 +76,6 @@ router.get('/delete/:key', function(req, res){
 });
 router.get('/edit/:key', function(req, res){
     Role.findOne({key: req.params.key},function(err,role){
-        console.log(role);
         if(err) console.log(err);
         res.render('security/role-edit', { title: '修改角色', role: role});
     });
