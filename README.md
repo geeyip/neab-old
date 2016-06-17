@@ -1,7 +1,7 @@
 # neab
 ## 主要技术
 
-* 使用 [`Express 4.x`](https://github.com/expressjs/express) 作为主框架, 视图模板引擎使用[`swig`](https://github.com/paularmstrong/swig)
+* 使用 [Express 4.x](https://github.com/expressjs/express) 作为主框架, 视图模板引擎使用[swig](https://github.com/paularmstrong/swig)
 * 前端页面使用 `Bootstrap 3.x` 布局样式，表单验证使用`Parsley.js`
 * 数据库使用`MongoDB` , 并使用`Mongoose`操作数据库
 * 登录认证使用 `passport`, 资源权限控制使用 `node-acl`
