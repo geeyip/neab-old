@@ -25,7 +25,7 @@
 ```
 启动后，`管理`下`用户`、`角色`、`资源` 都没有访问权限。为了能配置权限，需暂时修改 `conf/resource.json`文件。
 加入下面带注释部分
-```json
+```javascript
 {
   "not_need_auth": [
     "/login",
