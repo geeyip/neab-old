@@ -39,7 +39,7 @@
     "/users/eidt",  //用户修改
     "/users/delete",//用户删除
     "/users/roles", //用户选择角色
-    "/roles/add,    //角色新增
+    "/roles/add",    //角色新增
     "/roles/edit",  //角色修改
     "/roles/delete", //角色删除
     "/roles/users"   //角色选择用户
