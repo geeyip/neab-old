@@ -3,6 +3,8 @@ var router = express.Router();
 var Account = require('mongoose').model('Account');
 var passport = require('passport');
 var ACL = require('../src/acl');
+var async = require('co').wrap;
+
 router.get('/', function(req, res, next) {
    res.render('index',{title: '首页'});
 });
@@ -29,20 +31,18 @@ router.get('/signup', function(req, res){
     res.render('signup', {title: '注册'});
 });
 
-router.get('/signup/user/exits', function(req, res){
-    Account.findByUsername(req.query.username, function(err, user){
-        if(err) console.log(err);
-        if(user){
-            res.writeHead(404);
-            res.end();
-        }else{
-            res.writeHead(200);
-            res.end();
-        }
-    });
-});
+router.get('/signup/user/exits', async(function*(req, res, next){
+    try{
+        var user = yield Account.findByUsername(req.query.username);
+        var status = user? 404 : 200;
+        res.writeHead(status);
+        res.end();
+    }catch(err){
+        next(err);
+    }
+}));
 
-router.post('/signup', function(req, res){
+router.post('/signup', function(req, res, next){
     Account.register(new Account({
         username : req.body.username,
         email: req.body.email
