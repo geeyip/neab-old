@@ -39,22 +39,32 @@
 }
 ```
 在数组`not_need_grant`中加入
-```http
-    "/users",
-    "/users/edit",
-    "/users/delete",
-    "/users/roles",
-    "/roles",
-    "/roles/add",
-    "/roles/edit",
-    "/roles/delete",
-    "/roles/users",
-    "/roles/resources",
-    "/resources",
-    "/resources/add",
-    "/resources/edit",
-    "/resources/delete"
 ```
-配置完成后，恢复文件即可。
+  "/users",
+  "/users/edit",
+  "/users/delete",
+  "/users/roles",
+  "/roles",
+  "/roles/add",
+  "/roles/edit",
+  "/roles/delete",
+  "/roles/users",
+  "/roles/resources",
+  "/resources",
+  "/resources/add",
+  "/resources/edit",
+  "/resources/delete"
+```
+配置好资源访问权限后，恢复文件即可。
 
 ### 如何配置资源
+资源的访问权限控制和`url`相关联,例如`用户`的`URL`如下
+  ```url
+  /users
+  /users/edit
+  /users/delete
+  /users/roles
+   ```
+  则资源和权限配置如下
+  ![](img/p0.png)
+
