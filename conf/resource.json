@@ -1,11 +1,11 @@
 {
-  "outLogin": [
+  "not_need_auth": [
     "/login",
     "/logout",
     "/signup",
     "/signup/user/exits"
   ],
-  "outPermission": [
+  "not_need_grant": [
     "/profile",
     "/profile/password"
   ]

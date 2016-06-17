@@ -1,6 +1,6 @@
 var passport = require('passport');
 var Account = require('../models/account');
-var outAuth = require('../conf/outAuth.json');
+var Resource = require('../conf/resource.json');
 var ACL = require('./acl');
 /**
  * 登录认证配置
@@ -14,7 +14,7 @@ module.exports = function(app){
     passport.deserializeUser(Account.deserializeUser());
     app.use(function(req, res, next) {
         //验证是否已经登录
-        if (outAuth["outLogin"].indexOf(req.path) == -1) {
+        if (Resource["not_need_auth"].indexOf(req.path) == -1) {
             if (!req.isAuthenticated || !req.isAuthenticated()) {
                 if (req.session) {
                     req.session.returnTo = req.originalUrl || req.url;
@@ -30,7 +30,7 @@ module.exports = function(app){
         var resource = req.path.split('/').slice(1,2).join('/');
         var permission = req.path.split('/').slice(2,3).join('/');
         permission = permission==''?resource:permission;
-        if (outAuth["outLogin"].indexOf(req.path) == -1 && outAuth["outPermission"].indexOf(req.path) == -1 && resource != '') {
+        if (Resource["not_need_auth"].indexOf(req.path) == -1 && Resource["not_need_grant"].indexOf(req.path) == -1 && resource != '') {
             var userId = req.user.username;
             console.log('资源是：'+resource);
             console.log('权限是：'+permission);
