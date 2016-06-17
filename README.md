@@ -39,8 +39,8 @@
 }
 ```
 在数组`not_need_grant`中加入
-```url
-"/users",
+```http
+    "/users",
     "/users/edit",
     "/users/delete",
     "/users/roles",
