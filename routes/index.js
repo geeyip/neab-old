@@ -4,56 +4,6 @@ var Account = require('mongoose').model('Account');
 var passport = require('passport');
 var ACL = require('../src/acl');
 router.get('/', function(req, res, next) {
-    //ACL.allow(req.session.userId,'users','edit', function(err, result){
-    //    var flag =  ACL.isAllowed(req.session.userId, 'users', 'edit', function(err, result){
-    //        console.log(err);
-    //        console.log(result);
-    //    });
-    //});
-    //ACL.addUserRoles(req.user.username, ['admin','cba'], function(err){
-    //    ACL.userRoles(req.user.username, function(err, roles){
-    //        console.log(roles);
-    //    });
-    //})
-    //ACL.roleUsers('admin', function(err, users){
-    //    console.log(users);
-    //});
-    //
-    //ACL.hasRole(req.user.username, 'cba', function(err, hasRole){
-    //    console.log('1:'+hasRole);
-    //});
-    //ACL.hasRole(req.user.username, 'cba2', function(err, hasRole){
-    //    console.log('2:'+hasRole);
-    //});
-
-
-    ACL.allow('admin', 'users', 'edit', function(err){
-
-    });
-
-    //ACL.removeAllow('admin', 'users', 'edit', function(err){
-    //
-    //});
-
-    //ACL.removeUserRoles(req.user.username, 'admin', function(err){
-    //    ACL.isAllowed(req.user.username, 'profile', '*', function(err, allowed){
-    //                console.log(allowed);
-    //            });
-    //});
-    //ACL.addUserRoles(req.user.username, ['admin'], function(err){
-    //    ACL.userRoles(req.user.username, function(err, roles){
-    //        console.log(roles);
-    //    });
-    //});
-    //ACL.removeAllow('admin', 'profile', '*', function(err){
-    //
-    //});
-
-    //ACL.allowedPermissions(req.user.username, 'profile', function(err, obj){
-    //    console.log(obj);
-    //});
-
-    //res.redirect('/users');
    res.render('index',{title: '首页'});
 });
 

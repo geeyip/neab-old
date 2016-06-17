@@ -14,7 +14,7 @@ module.exports = function(app){
     passport.deserializeUser(Account.deserializeUser());
     app.use(function(req, res, next) {
         //验证是否已经登录
-        if (outAuth.indexOf(req.path) == -1) {
+        if (outAuth["outLogin"].indexOf(req.path) == -1) {
             if (!req.isAuthenticated || !req.isAuthenticated()) {
                 if (req.session) {
                     req.session.returnTo = req.originalUrl || req.url;
@@ -30,19 +30,20 @@ module.exports = function(app){
         var resource = req.path.split('/').slice(1,2).join('/');
         var permission = req.path.split('/').slice(2,3).join('/');
         permission = permission==''?resource:permission;
-        if (outAuth.indexOf(req.path) == -1 && resource != '') {
+        if (outAuth["outLogin"].indexOf(req.path) == -1 && outAuth["outPermission"].indexOf(req.path) == -1 && resource != '') {
             var userId = req.user.username;
-            console.log(resource);
+            console.log('资源是：'+resource);
+            console.log('权限是：'+permission);
             ACL.isAllowed(userId, resource, permission, function(err, allowed){
                 console.log(allowed);
                 if(allowed){
                     next();
                 }else{
-                    next();
-                    //res.render('error', {
-                    //    message: 'ACL 禁止访问资源',
-                    //    error: {status: '401.3'}
-                    //});
+                   // next();
+                   res.render('error', {
+                        message: 'ACL 禁止访问资源',
+                        error: {status: '401.3'}
+                   });
                 }
             });
         }else{

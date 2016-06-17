@@ -1,0 +1,28 @@
+{% extends '../layout/layout.html' %}
+{% block content %}
+<legend>资源列表</legend>
+<table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>资源ID</th>
+        <th>资源名称</th>
+        <th>资源描述</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for resource in resources %}
+    <tr>
+        <td>{{resource.key}}</td>
+        <td>{{resource.name}}</td>
+        <td>{{resource.desc}}</td>
+        <td>
+            <a href="/resources/edit/{{resource.key}}" class="btn btn-sm btn-primary">修改</a>
+            <a href="/resources/delete/{{resource.key}}" onclick="if(confirm('确定删除?')==false)return false;" class="btn btn-sm btn-danger">删除</a>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<a href="/resources/add" class="btn btn-primary">新增资源</a>
+{% endblock %}

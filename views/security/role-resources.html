@@ -1,0 +1,86 @@
+{% extends '../layout/layout.html' %}
+{% block path %}
+<ol class="breadcrumb">
+    <li><a href="/"><i class="glyphicon glyphicon-home"></i></a></li>
+    <li><a href="/roles">角色</a></li>
+    <li class="active">{{title}}</li>
+</ol>
+{% endblock %}
+{% block content %}
+<form class="col-sm-10 form-horizontal" data-parsley-validate id="registerForm" method="post" >
+    <div class="list-group">
+        <a  class="list-group-item">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label class="control-label">角色ID</label>
+                </div>
+                <div class="col-sm-10">
+                    {{role.key}}
+                </div>
+            </div>
+        </a>
+        <a class="list-group-item">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label class="control-label">角色名称</label>
+                </div>
+                <div class="col-sm-10">
+                    {{role.name}}
+                </div>
+            </div>
+        </a>
+    </div>
+<table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>资源</th>
+        <th>资源权限</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for resource in resources %}
+    <tr>
+        <td>
+
+            <label>
+            <input type="checkbox" name="resources" value="{{resource.key}}"
+                    {% if roleResources[resource.key] %}
+                        checked="checked"
+                    {% endif%}
+                    onclick="checkResource(this);"/>
+            {{resource.name}}
+            </label>
+            <code> {{resource.key}}</code>
+
+        </td>
+        <td>
+            <table>
+                {% for per in resource.permission %}
+                <tr>
+                    <td>
+                        <label>
+                        <input type="checkbox" name="{{resource.key}}" value="{{loop.key}}" class="permission_{{resource.key}}"
+
+                               {% if roleResources[resource.key] %}
+                               {% set foo = roleResources[resource.key] %}
+                               {% if foo.indexOf(loop.key)!=-1 %}
+                               checked="checked"
+                               {% endif%}
+                               {% endif%}
+                                />
+                        {{per}}
+                        </label>
+                         <code>{{loop.key}}</code>
+                    </td>
+                </tr>
+                {% endfor%}
+            </table>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+    <a href="/roles" class="btn btn-default">取消</a>
+    <button type="submit" class="btn btn-primary">提交</button>
+ </form>
+{% endblock %}

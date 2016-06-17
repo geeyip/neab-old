@@ -1,4 +1,11 @@
 {% extends '../layout/layout.html' %}
+{% block path %}
+<ol class="breadcrumb">
+    <li><a href="/"><i class="glyphicon glyphicon-home"></i></a></li>
+    <li><a href="/users">用户</a></li>
+    <li class="active">{{title}}</li>
+</ol>
+{% endblock%}
 {% block content %}
 <div class="panel panel-default">
     <div class="panel-body">

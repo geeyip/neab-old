@@ -18,6 +18,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 require('./src/mongoose')();
+require('./models/security')();
 require('./src/session')(app);
 require('./src/passport')(app);
 require('./src/logger')(app);

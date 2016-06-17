@@ -1,5 +1,6 @@
 {% extends '../layout/layout.html' %}
 {% block content %}
+<legend>用户列表</legend>
 <table class="table table-bordered table-hover">
     <thead>
     <tr>
@@ -14,8 +15,9 @@
         <td>{{user.username}}</td>
         <td>{{user.email}}</td>
         <td>
-            <a href="/users/edit/{{user.username}}" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
-            <a href="/users/delete/{{user.username}}" onclick="if(confirm('确定删除?')==false)return false;" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+            <a href="/users/edit/{{user.username}}" class="btn btn-sm btn-primary">修改</a>
+            <a href="/users/delete/{{user.username}}" onclick="if(confirm('确定删除?')==false)return false;" class="btn btn-sm btn-danger">删除</a>
+            <a href="/users/roles/{{user.username}}" class="btn btn-sm btn-success">选择角色</a>
         </td>
     </tr>
     {% endfor %}
