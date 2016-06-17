@@ -67,4 +67,7 @@
    ```
   则资源和权限配置如下
   ![](https://raw.githubusercontent.com/geeyip/techMD/master/pic/p0.png)
+  
+  角色资源授权
+  ![](https://raw.githubusercontent.com/geeyip/techMD/master/pic/p7.png)
 
