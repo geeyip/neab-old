@@ -67,6 +67,9 @@
                                checked="checked"
                                {% endif%}
                                {% endif%}
+                               {% if !roleResources[resource.key] %}
+                               disabled="disabled"
+                               {% endif%}
                                 />
                         {{per}}
                         </label>
