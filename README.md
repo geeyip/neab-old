@@ -7,9 +7,9 @@
 * 登录认证使用[passport.js](https://github.com/jaredhanson/passport), 资源权限控制(ACL)使用[node-acl](https://github.com/OptimalBits/node_acl)
 * 实时双向通信使用[socket.io](https://github.com/socketio/socket.io)
 
-### MongoDB配置
+### MongoDB地址配置
 
-conf > setting.js 配置 db_url
+修改`conf`目录下`setting.js`文件,配置`db_url` 参数
 ```javascript
  "db_url": "mongodb://localhost:27017/neab",
 ```
@@ -23,4 +23,21 @@ conf > setting.js 配置 db_url
 ````http
   http://localhost:3000
 ```
+* 启动后，`管理`下`用户`、`角色`、`资源` 都没有访问权限。为了能配置权限，需展示修改 `conf/resource.json`文件。
+```json
+{
+  "not_need_auth": [
+    "/login",
+    "/logout",
+    "/signup",
+    "/signup/user/exits"
+  ],
+  "not_need_grant": [
+    "/profile",
+    "/profile/password"
+  ]
+}
+```
+* 
+* 
 
