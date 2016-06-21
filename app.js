@@ -30,9 +30,10 @@ app.use(session({
 }));
 app.use(flash());
 
-app.use(paginate.middleware(50, 100));
+app.use(paginate.middleware(15, 100));
 require('./src/mongoose')();
 require('./src/helper')(app, pkg.name);
+
 
 require('./models/security')();
 require('./models/person')();

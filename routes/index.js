@@ -13,16 +13,6 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/login', function(req, res){
-    //for(var i=1;i<1000;i++){
-    //    var person = {
-    //        name: '张大'+i,
-    //        age: 10+i,
-    //        address: '杭州'+i
-    //    }
-    //    person = new Person(person);
-    //    person.save();
-    //
-    //}
     res.render('login', {title:'登录', username : req.flash('username') });
 });
 

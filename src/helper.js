@@ -20,11 +20,6 @@ module.exports = function(app, name){
     if(req.path == '/login' && req.method == 'POST'){
       req.flash('username', req.body.username);
     }
-    res.locals.isActive = function(url){
-
-       return req.originalUrl.indexOf(url)==-1?'':'active';
-
-    }
     res.locals.createPagination = function(pages, page){
       var params = qs.parse(url.parse(req.url).query)
       var str = '<ul class="pagination">';
