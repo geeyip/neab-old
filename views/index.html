@@ -3,8 +3,10 @@
 <table class="table table-bordered table-hover">
     <thead>
     <tr>
-        <th>姓名</th>
-        <th>年龄</th>
+        <th>姓名<a href="{{paginate.href({sort:'name'})}}">正序</a>
+            <a href="{{paginate.href({sort:'-name'})}}">倒序</a> </th>
+        <th>年龄<a href="{{paginate.href({sort:'age'})}}">正序</a>
+               <a href="{{paginate.href({sort:'-age'})}}">倒序</a></th>
         <th>地址</th>
     </tr>
     </thead>

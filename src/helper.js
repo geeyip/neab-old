@@ -11,6 +11,7 @@ module.exports = function(app, name){
 
   app.use(function(req, res , next){
     res.locals.appName = name || 'App';
+    res.locals.req = req;
     if (typeof req.flash !== 'undefined') {
       res.locals.info = req.flash('info');
       res.locals.error = req.flash('error');

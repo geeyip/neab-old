@@ -5,12 +5,15 @@ var passport = require('passport');
 var ACL = require('../src/acl');
 var async = require('co').wrap;
 var Person = require('mongoose').model('Person');
-router.get('/', function(req, res, next) {
-    Person.paginate({}, {page: req.query.page, limit: req.query.limit}, function(err, result) {
+router.get('/', async(function *(req, res, next) {
+    try{
+        var result = yield Person.paginate({}, {page: req.query.page,limit: req.query.limit, sort: req.query.sort});
         res.render('index',{title: '首页',result: result});
-    });
+    }catch (err){
+        return next(err);
+    }
 
-});
+}));
 
 router.get('/login', function(req, res){
     res.render('login', {title:'登录', username : req.flash('username') });
