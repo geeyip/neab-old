@@ -1,5 +1,6 @@
 {% extends 'layout/layout.html' %}
 {% block content %}
+{{ createPagination(result.pages,result.page) }}
 <table class="table table-bordered table-hover">
     <thead>
     <tr>
@@ -18,6 +19,5 @@
     {% endfor %}
     </tbody>
 </table>
-
-
+{{ createPagination(result.pages,result.page) }}
 {% endblock %}

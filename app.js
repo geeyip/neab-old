@@ -29,11 +29,14 @@ app.use(session({
     saveUninitialized: false
 }));
 app.use(flash());
-app.use(require('./src/helper')(pkg.name));
+
 app.use(paginate.middleware(50, 100));
 require('./src/mongoose')();
+require('./src/helper')(app, pkg.name);
+
 require('./models/security')();
 require('./models/person')();
+
 require('./src/passport')(app);
 require('./src/logger')(app);
 require('./routes/main')(app);

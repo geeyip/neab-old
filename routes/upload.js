@@ -31,7 +31,7 @@ router.post('/', function(req, res){
 
         //result += "window.parent.CKEDITOR.tools.callFunction(" + callback + ", '" + path + "','')";
         //result += "console.log(window);console.log('"+path+"')";
-        //result += "</script>";
+        result += "</script>";
         console.log(result);
         res.send(result);
     });

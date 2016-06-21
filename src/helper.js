@@ -7,106 +7,92 @@ var url = require('url');
 var qs = require('querystring');
 var _ = require('underscore');
 
-function helpers (name) {
-  return function (req, res, next) {
-    res.locals.appName = name || 'App';
-    res.locals.title = name || 'App';
-    res.locals.req = req;
-    res.locals.isActive = function (link) {
-      if (link === '/' ) {
-        return req.url === '/' ? 'active' : '';
-      } else {
-        return req.url.indexOf(link) !== -1 ? 'active' : '';
-      }
-    }
-    res.locals.formatDate = formatDate;
-    res.locals.formatDatetime = formatDatetime;
-    res.locals.stripScript = stripScript;
-    res.locals.createPagination = createPagination(req);
+module.exports = function(app, name){
 
+  app.use(function(req, res , next){
+    res.locals.appName = name || 'App';
     if (typeof req.flash !== 'undefined') {
       res.locals.info = req.flash('info');
       res.locals.error = req.flash('error');
       res.locals.success = req.flash('success');
       res.locals.warning = req.flash('warning');
     }
-
     if(req.path == '/login' && req.method == 'POST'){
       req.flash('username', req.body.username);
     }
-    next();
-  }
-}
+    res.locals.isActive = function(url){
 
-module.exports = helpers;
+       return req.originalUrl.indexOf(url)==-1?'':'active';
 
-/**
- * Pagination helper
- *
- * @param {Number} pages
- * @param {Number} page
- * @return {String}
- * @api private
- */
-
-function createPagination (req) {
-  return function createPagination(pages, page) {
-
-    var params = qs.parse(url.parse(req.url).query);
-    var str = '<ul class="pagination">';
-    params.page = 1;
-    var clas = page == 1 ? "active" : "no";
-    for (var p = 1; p <= pages; p++) {
-      params.page = p;
-      clas = page == p ? "active" : "no";
-      var href = '?' + qs.stringify(params);
-      str += '<li class="'+clas+'"><a href="'+ href +'">'+ p +'</a></li>';
     }
-    str += '</ul>';
-    return str
-  }
-}
+    res.locals.createPagination = function(pages, page){
+      var params = qs.parse(url.parse(req.url).query)
+      var str = '<ul class="pagination">';
+      params.page = 1;
+      var clas = page == 1 ? "active" : "no";
 
-/**
- * Format date helper
- *
- * @param {Date} date
- * @return {String}
- * @api private
- */
+      str += '<li class="no"><a href="?'+qs.stringify(params)+'">首页</a></li>';
 
-function formatDate (date) {
-  date = new Date(date);
-  var monthNames = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
-  return monthNames[date.getMonth()]+' '+date.getDate()+', '+date.getFullYear();
-}
+      if(pages>0&&page>1){
+        str += '<li class="no"><a href="'+res.locals.paginate.href(true) +'">上一页</a></li>'
+      }else{
+        str += '<li class="no disabled"><a href="">上一页</a></li>'
+      }
 
-/**
- * Format date time helper
- *
- * @param {Date} date
- * @return {String}
- * @api private
- */
+      var startAbs = 0;
+      var start = 0;
+      var endAbs = 0;
+      var end = 0;
+      if(pages>10){
 
-function formatDatetime (date) {
-  date = new Date(date);
-  var hour = date.getHours();
-  var minutes = date.getMinutes() < 10
-    ? '0' + date.getMinutes().toString()
-    : date.getMinutes();
+        start = page-5;
+        if(start<=0){
+          startAbs = Math.abs(start);
+          start = 1;
+        }else{
+          startAbs = 0;
+        }
 
-  return formatDate(date) + ' ' + hour + ':' + minutes;
-}
+        end = page+4;
+        if(end>pages){
+          endAbs = Math.abs(pages-end);
+          end = pages;
+        }else{
+          endAbs = 0;
+        }
 
-/**
- * Strip script tags
- *
- * @param {String} str
- * @return {String}
- * @api private
- */
+        if(startAbs>0){
+          end = end+startAbs;
+        }
+        if(endAbs>0){
+          start = start-endAbs;
+        }
 
-function stripScript (str) {
-  return str.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+      }else{
+        start = 1;
+        end = pages;
+
+      }
+      for (var p = start; p <=end; p++) {
+        params.page = p;
+        clas = page == p ? "active" : "no"
+        var href = '?' + qs.stringify(params)
+        str += '<li class="'+clas+'"><a href="'+ href +'">'+ p +'</a></li>'
+      }
+
+
+      if(pages>0&&page<pages){
+        str += '<li class="no"><a href="'+res.locals.paginate.href() +'">下一页</a></li>'
+      }else{
+        str += '<li class="no disabled"><a href="">下一页</a></li>'
+      }
+
+      params.page = pages;
+
+      str += '<li class="no"><a href="?'+qs.stringify(params)+'">末页</a></li></ul>';
+
+      return str
+    }
+    next();
+  });
 }
