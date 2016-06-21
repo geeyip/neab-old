@@ -8,4 +8,5 @@ module.exports = function(app){
     app.use('/roles', require('./roles'));
     app.use('/resources', require('./resources'));
     app.use('/profile', require('./profile'));
+    app.use('/upload', require('./upload'));
 }

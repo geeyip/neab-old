@@ -1,4 +1,23 @@
 {% extends 'layout/layout.html' %}
 {% block content %}
-    欢迎您
+<table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>姓名</th>
+        <th>年龄</th>
+        <th>地址</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for person in result.docs %}
+    <tr>
+        <td>{{person.name}}</td>
+        <td>{{person.age}}</td>
+        <td>{{person.address}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
 {% endblock %}

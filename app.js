@@ -4,7 +4,12 @@ var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var swig = require('swig');
-var acl = require('acl');
+var pkg = require('./package.json');
+var session = require('express-session');
+var setting = require('./conf/setting.json');
+var flash = require('connect-flash');
+var paginate = require('express-paginate');
+
 var app = express();
 
 app.engine('html', swig.renderFile);
@@ -16,13 +21,21 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(session({
+    secret: setting.session_secret,
+    // cookie: {maxAge: 1000*60*30 },
+    // rolling: true,
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(flash());
+app.use(require('./src/helper')(pkg.name));
+app.use(paginate.middleware(50, 100));
 require('./src/mongoose')();
 require('./models/security')();
-require('./src/session')(app);
+require('./models/person')();
 require('./src/passport')(app);
 require('./src/logger')(app);
-require('./src/flash')(app);
 require('./routes/main')(app);
 require('./src/error')(app);
 

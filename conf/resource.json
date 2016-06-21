@@ -3,10 +3,12 @@
     "/login",
     "/logout",
     "/signup",
-    "/signup/user/exits"
+    "/signup/user/exits",
+    "/upload"
   ],
   "not_need_grant": [
     "/profile",
-    "/profile/password"
+    "/profile/password",
+    "/upload/image"
   ]
 }

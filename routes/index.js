@@ -4,12 +4,25 @@ var Account = require('mongoose').model('Account');
 var passport = require('passport');
 var ACL = require('../src/acl');
 var async = require('co').wrap;
-
+var Person = require('mongoose').model('Person');
 router.get('/', function(req, res, next) {
-   res.render('index',{title: '首页'});
+    Person.paginate({}, {page: req.query.page, limit: req.query.limit}, function(err, result) {
+        res.render('index',{title: '首页',result: result});
+    });
+
 });
 
 router.get('/login', function(req, res){
+    //for(var i=1;i<1000;i++){
+    //    var person = {
+    //        name: '张大'+i,
+    //        age: 10+i,
+    //        address: '杭州'+i
+    //    }
+    //    person = new Person(person);
+    //    person.save();
+    //
+    //}
     res.render('login', {title:'登录', username : req.flash('username') });
 });
 

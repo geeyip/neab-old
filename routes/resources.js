@@ -14,8 +14,11 @@ router.get('/add', function(req, res){
 });
 router.post('/add', function(req, res){
     var keys = req.body.permissionKey;
+    keys = _.isArray(keys)?keys:[keys];
     var names = req.body.permissionName;
+    names = _.isArray(names)?keys:[names];
     var permission = _.object(keys, names);
+    console.log(permission);
     var resource = new Resource(req.body);
     resource.permission = permission;
     resource.save(function(err){
@@ -54,7 +57,10 @@ router.get('/edit/:key', function(req, res){
 router.post('/edit/:key', function(req, res){
     var resource = req.body;
     var keys = req.body.permissionKey;
+    keys = _.isArray(keys)?keys:[keys];
     var names = req.body.permissionName;
+    names = _.isArray(names)?keys:[names];
+
     resource.permission = _.object(keys, names);
     Resource.update({key: req.params.key}, resource, function(err){
         if(err) console.log(err);
