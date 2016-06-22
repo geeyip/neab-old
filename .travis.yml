@@ -4,4 +4,5 @@ node_js:
 services: mongodb
 before_script:
   - npm install
-script: npm start
+script:
+  - npm start
