@@ -2,5 +2,5 @@ language: node_js
 node_js:
   - "4"
 services: mongodb
-script:
+install:
   - npm install
