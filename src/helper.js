@@ -22,6 +22,9 @@ module.exports = function(app, name){
       req.flash('username', req.body.username);
     }
     res.locals.createPagination = function(pages, page){
+      if(pages < 2){
+        return '';
+      }
       var params = qs.parse(url.parse(req.url).query)
       var str = '<ul class="pagination">';
       params.page = 1;

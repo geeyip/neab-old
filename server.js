@@ -4,10 +4,10 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+var app = require('./app');
 var debug = require('debug')('neab:server');
 var http = require('http');
-var socket = require('../socket/onlineSocket');
+var socket = require('./socket/onlineSocket');
 /**
  * Get port from environment and store in Express.
  */

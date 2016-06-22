@@ -7,8 +7,13 @@ var async = require('co').wrap;
 var Person = require('mongoose').model('Person');
 router.get('/', async(function *(req, res, next) {
     try{
-        var result = yield Person.paginate({}, {page: req.query.page,limit: req.query.limit, sort: req.query.sort});
-        res.render('index',{title: '首页',result: result});
+        var condition = {};
+        if(req.query.name){
+            condition.$or = [{"name": new RegExp(req.query.name)}, {"address": new RegExp(req.query.name)}];
+        }
+
+        var result = yield Person.paginate(condition, {page: req.query.page,limit: req.query.limit, sort: req.query.sort});
+        res.render('index',{title: '首页',result: result,name: req.query.name});
     }catch (err){
         return next(err);
     }

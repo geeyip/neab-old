@@ -1,8 +1,17 @@
 {% extends 'layout/layout.html' %}
 {% block content %}
+<form class="navbar-form navbar-left" action="/" method="get" role="search">
+    <div class="form-group">
+        <input type="text" name="name" class="form-control" value="{{name}}" placeholder="姓名或地址">
+    </div>
+    <button type="submit" class="btn btn-default">查询</button>
+</form>
+<legend>共查询到{{result.total}}条记录</legend>
+{{ createPagination(result.pages,result.page) }}
 <table class="table table-bordered table-hover">
     <thead>
     <tr>
+        <th>序号</th>
         <th>姓名<a href="{{paginate.href({sort:'name'})}}">正序</a>
             <a href="{{paginate.href({sort:'-name'})}}">倒序</a> </th>
         <th>年龄<a href="{{paginate.href({sort:'age'})}}">正序</a>
@@ -13,6 +22,7 @@
     <tbody>
     {% for person in result.docs %}
     <tr>
+        <td>{{(result.page-1) * result.limit + loop.index}}</td>
         <td>{{person.name}}</td>
         <td>{{person.age}}</td>
         <td>{{person.address}}</td>
