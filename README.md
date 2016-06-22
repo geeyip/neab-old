@@ -1,4 +1,5 @@
 # neab
+[![Build Status](https://travis-ci.org/geeyip/neab.svg?branch=master)](https://travis-ci.org/geeyip/neab)
 
 ### 主要技术
 * 使用 [Express 4.x](https://github.com/expressjs/express) 作为主框架, 使用[swig](https://github.com/paularmstrong/swig)为视图模板引擎
