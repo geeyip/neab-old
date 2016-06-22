@@ -2,7 +2,5 @@ language: node_js
 node_js:
   - "4"
 services: mongodb
-before_script:
-  - npm install
 script:
-  - npm start
+  - npm install
