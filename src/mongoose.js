@@ -2,8 +2,17 @@ var mongoose = require('mongoose');
 var setting = require('../conf/setting.json');
 
 module.exports = function(){
-    mongoose.connect(setting['db_url']);
 
+    var opts = {
+        db: { native_parser: true },
+        server: {
+            poolSize: 5 ,
+            auto_reconnect: true,
+            socketOptions: {keepAlive: 1}
+        }
+    }
+    var con = mongoose.connect(setting['db_url'], opts);
+   // console.log(con);
     mongoose.connection.on('error', function(err){
         console.log(err);
     });

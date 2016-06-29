@@ -1,0 +1,26 @@
+{% extends '../layout/layout.html' %}
+{% block content %}
+<div class="row">
+    {% for img in images %}
+    <div class="col-md-3">
+        <a href="{{img}}"  target="_blank" class="thumbnail">
+            <img src="{{img}}" class="img-thumbnail"/>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+<form class="form-signin" role="form" method="post" enctype='multipart/form-data'>
+    <fieldset>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">图片</label>
+            <div class="col-sm-5">
+                <input id="fulAvatar" name="fulAvatar" type="file" class="form-control" />
+            </div>
+            <div class="col-sm-4">
+                <button id="btnSub" class="btn btn-sm btn-primary" type="submit">上 传</button>
+            </div>
+        </div>
+    </fieldset>
+</form>
+{% endblock %}

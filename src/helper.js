@@ -12,6 +12,7 @@ module.exports = function(app, name){
   app.use(function(req, res , next){
     res.locals.appName = name || 'App';
     res.locals.req = req;
+    res.locals.user = req.user;
     if (typeof req.flash !== 'undefined') {
       res.locals.info = req.flash('info');
       res.locals.error = req.flash('error');
@@ -25,12 +26,15 @@ module.exports = function(app, name){
       if(pages < 2){
         return '';
       }
+      if(pages >100){
+        pages = 100;
+      }
       var params = qs.parse(url.parse(req.url).query)
       var str = '<ul class="pagination">';
       params.page = 1;
       var clas = page == 1 ? "active" : "no";
 
-      str += '<li class="no"><a href="?'+qs.stringify(params)+'">首页</a></li>';
+      //str += '<li class="no"><a href="?'+qs.stringify(params)+'">首页</a></li>';
 
       if(pages>0&&page>1){
         str += '<li class="no"><a href="'+res.locals.paginate.href(true) +'">上一页</a></li>'
@@ -88,7 +92,7 @@ module.exports = function(app, name){
 
       params.page = pages;
 
-      str += '<li class="no"><a href="?'+qs.stringify(params)+'">末页</a></li></ul>';
+     // str += '<li class="no"><a href="?'+qs.stringify(params)+'">末页</a></li></ul>';
 
       return str
     }

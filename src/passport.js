@@ -42,7 +42,7 @@ module.exports = function(app){
         if (Resource["not_need_auth"].indexOf(path) == -1
             && Resource["not_need_grant"].indexOf(standardPath) == -1
             && resource != '') {
-
+            console.log(req.user.username);
             var userId = req.user.username;
             ACL.isAllowed(userId, resource, permission, function(err, allowed){
                 console.log('[路径]:'+path+' [方法]:'+req.method+' [资源]:'+resource+' [操作]:' + permission+' [权限]:'+allowed);

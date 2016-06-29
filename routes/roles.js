@@ -8,20 +8,23 @@ var _ = require('underscore');
 var Resource = mongoose.model('Resource');
 var async = require('co').wrap;
 
-router.get('/', async(function* (req, res, next){
+//列表
+exports.list = async(function* (req, res, next){
     try{
         var roles = yield Role.find();
         res.render('security/role-list', { title: '角色', roles: roles});
     }catch(err){
         next(err);
     }
-}));
-
-router.get('/add', function(req, res){
-    res.render('security/role-add', { title: '新增角色'});
 });
 
-router.post('/add', async(function* (req, res, next){
+//进入新增
+exports.intoAdd = function(req, res){
+    res.render('security/role-add', { title: '新增角色'});
+};
+
+//提交新增
+exports.submitAdd =  async(function* (req, res, next){
     try{
         var role = new Role(req.body);
         yield role.save();
@@ -29,9 +32,9 @@ router.post('/add', async(function* (req, res, next){
     }catch(err){
         next(err);
     }
-}));
+});
 
-router.get('/add/key_check', async(function* (req, res, next){
+exports.keyCheck = async(function* (req, res, next){
     try{
         var role = yield Role.findOne({key: req.query.key});
         var status = role?404:200;
@@ -40,9 +43,9 @@ router.get('/add/key_check', async(function* (req, res, next){
     }catch(err){
         next(err);
     }
-}));
+});
 
-router.get('/add/name_check', async(function* (req, res, next){
+exports.nameCheck = async(function* (req, res, next){
     try{
         var role = yield Role.findOne({name: req.query.name});
         var status = role?404:200;
@@ -51,9 +54,9 @@ router.get('/add/name_check', async(function* (req, res, next){
     }catch(err){
         next(err);
     }
-}));
+});
 
-router.get('/edit/name_check/:name',async(function* (req, res, next){
+exports.editNameCheck = async(function* (req, res, next){
     try{
         var status = 200;
         if(req.query.name != req.params.name){
@@ -65,9 +68,10 @@ router.get('/edit/name_check/:name',async(function* (req, res, next){
     }catch(err){
         next(err);
     }
-}));
+});
 
-router.get('/delete/:key', async(function* (req, res, next){
+//删除
+exports.delete = async(function* (req, res, next){
     try{
         var roleId = req.params.key;
         yield Role.remove({key: roleId});
@@ -77,24 +81,27 @@ router.get('/delete/:key', async(function* (req, res, next){
     }catch(err){
         next(err);
     }
-}));
+});
 
-router.get('/edit/:key', function(req, res, next){
+//进入修改
+exports.intoEdit =  function(req, res, next){
     Role.findOne({key: req.params.key},function(err,role){
         if(err) return next(err);
         res.render('security/role-edit', { title: '修改角色', role: role});
     });
-});
+};
 
-router.post('/edit/:key', function(req, res, next){
+//提交修改
+exports.submitEdit = function(req, res, next){
     Role.update({key: req.params.key},req.body,function(err){
         if(err) return next(err);
         req.flash('success','删除成功');
         res.redirect('/roles');
     });
-});
+};
 
-router.get('/users/:key', async(function* (req, res, next){
+//进入选择用户
+exports.intoSelectUser = async(function* (req, res, next){
     try{
         var roleId = req.params.key;
         var role = yield  Role.findOne({key: roleId});
@@ -104,9 +111,10 @@ router.get('/users/:key', async(function* (req, res, next){
     }catch(err){
         next(err);
     }
-}));
+});
 
-router.post('/users/:key', async(function* (req, res, next){
+//提交选择用户
+exports.submitSelectUser = async(function* (req, res, next){
     try{
         var roleId = req.params.key;
         var newRoleUsers = req.body.roleUsers;
@@ -125,9 +133,10 @@ router.post('/users/:key', async(function* (req, res, next){
     }catch(err){
         next(err);
     }
-}));
+});
 
-router.get('/resources/:key', async(function* (req, res, next){
+//进入资源授权
+exports.intoGrantResurce =  async(function* (req, res, next){
     try{
         var roleId = req.params.key;
         var role = yield Role.findOne({key: roleId});
@@ -137,9 +146,10 @@ router.get('/resources/:key', async(function* (req, res, next){
     }catch(err){
         next(err);
     }
-}));
+});
 
-router.post('/resources/:key', async(function* (req, res, next) {
+//提交资源授权
+exports.submitGrantResurce = async(function* (req, res, next) {
     try{
         var roleId = req.params.key;
         var resources = req.body.resources;
@@ -161,5 +171,4 @@ router.post('/resources/:key', async(function* (req, res, next) {
     }catch(err){
         next(err);
     }
-}));
-module.exports = router;
+});

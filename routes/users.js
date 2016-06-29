@@ -1,5 +1,3 @@
-var express = require('express');
-var router = express.Router();
 var mongoose = require('mongoose');
 var Account = mongoose.model('Account');
 var Role = mongoose.model('Role');
@@ -7,7 +5,7 @@ var ACL  = require('../src/acl');
 var _ = require('underscore');
 var async = require('co').wrap;
 
-router.get('/', async(function* (req, res, next){
+exports.list = async(function* (req, res, next){
     try{
         var condition = {};
         if(req.query.q){
@@ -18,9 +16,9 @@ router.get('/', async(function* (req, res, next){
     }catch(err){
         return next(err);
     }
-}));
+});
 
-router.get('/delete/:username', async(function* (req, res, next){
+exports.delete = async(function* (req, res, next){
     try{
         var userId = req.params.username;
         yield Account.remove({username: userId});
@@ -31,18 +29,18 @@ router.get('/delete/:username', async(function* (req, res, next){
     }catch(err){
         return next(err);
     }
-}));
+});
 
-router.get('/edit/:username', async(function* (req, res, next){
+exports.intoEdit = async(function* (req, res, next){
     try{
         var user = yield  Account.findByUsername(req.params.username);
         res.render('security/user-edit', {title: '修改用户', user: user});
     }catch(err){
         next(err);
     }
-}));
+});
 
-router.post('/edit/:username', async(function* (req, res, next){
+exports.submitEdit = async(function* (req, res, next){
     try{
         var _user = yield Account.findByUsername(req.params.username);
         yield Account.update({_id:_user._id}, req.body);
@@ -50,9 +48,10 @@ router.post('/edit/:username', async(function* (req, res, next){
     }catch(err){
         next(err);
     }
-}));
+});
 
-router.get('/roles/:username', async(function* (req, res, next){
+
+exports.intoGrantRole = async(function* (req, res, next){
     try{
         var userId = req.params.username;
         var user = yield Account.findByUsername(userId);
@@ -62,9 +61,9 @@ router.get('/roles/:username', async(function* (req, res, next){
     }catch(err){
         next(err);
     }
-}));
+});
 
-router.post('/roles/:username', async(function* (req, res, next){
+exports.submitGrantRole = async(function* (req, res, next){
     try{
         var userId = req.params.username;
         var newUserRoles = req.body.userRoles;
@@ -77,6 +76,4 @@ router.post('/roles/:username', async(function* (req, res, next){
     }catch(err){
         next(err);
     }
-}));
-
-module.exports = router;
+});

@@ -5,14 +5,26 @@ var passport = require('passport');
 var ACL = require('../src/acl');
 var async = require('co').wrap;
 var Person = require('mongoose').model('Person');
+
+
 router.get('/', async(function *(req, res, next) {
     try{
         var condition = {};
-        if(req.query.name){
-            condition.$or = [{"name": new RegExp(req.query.name)}, {"address": new RegExp(req.query.name)}];
+        if(req.query.username){
+            condition.username = req.query.username;
         }
+        if(req.query.age1){
+            var age1 =  parseInt(req.query.age1);
+            condition.age = {$gte: age1};
+        }
+        if(req.query.age2){
+            var age =  condition.age || {};
+            age.$lte =  parseInt(req.query.age2);
+            condition.age = age;
+        }
+        console.log(condition);
         var result = yield Person.paginate(condition, {page: req.query.page,limit: req.query.limit, sort: req.query.sort});
-        res.render('index',{title: '首页',result: result,name: req.query.name});
+        res.render('index',{title: '首页',result: result,query: req.query});
     }catch (err){
         return next(err);
     }
@@ -84,4 +96,16 @@ router.get('/unlock/user/:username', function(req, res){
         }
     });
 });
+
+
+var userStore = require('./../socket/userStore');
+var socketStore = require('./../socket/socketStore');
+
+
+router.get('/online', function(req, res){
+    var users = userStore.getUsers();
+    var sockets = socketStore.getSockets();
+    res.render('index', { title: '在线用户', users: users, sockets: sockets });
+});
+
 module.exports = router;

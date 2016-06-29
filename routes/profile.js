@@ -2,6 +2,7 @@ var express = require('express');
 var Account = require('mongoose').model('Account');
 var router = express.Router();
 router.get('/', function(req, res){
+    console.log();
     res.render('profile/profile', {title: '个人信息'});
 });
 

@@ -1,0 +1,32 @@
+{% if (info && info.length) %}
+  <div class="fade in alert alert-info">
+    <button class="close" type="button" data-dismiss="alert">×</button>
+    <ul>
+        <li>{{ info }}</li>
+    </ul>
+  </div>
+{% endif %}
+{% if (error && error.length) %}
+  <div class="fade in alert alert-danger">
+    <button class="close" type="button" data-dismiss="alert">×</button>
+    <ul>
+        <li>{{ error }}</li>
+    </ul>
+  </div>
+{% endif %}
+{% if (success && success.length) %}
+  <div class="fade in alert alert-success">
+    <button class="close" type="button" data-dismiss="alert">×</button>
+    <ul>
+        <li>{{ success }}</li>
+    </ul>
+  </div>
+{% endif %}
+{% if (warning && warning.length) %}
+  <div class="fade in alert alert-warning">
+    <button class="close" type="button" data-dismiss="alert">×</button>
+    <ul>
+        <li>{{ warning }}</li>
+    </ul>
+  </div>
+{% endif %}

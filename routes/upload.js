@@ -3,14 +3,17 @@ var router = express.Router();
 var formidable = require('formidable');
 var uuid = require('node-uuid');
 var fs = require('fs');
-router.post('/', function(req, res){
+
+router.post('/', function(req, res) {
+    console.log(req.headers.host);
     var form = new formidable.IncomingForm();   //创建上传表单
     form.encoding = 'utf-8';		//设置编辑
     form.uploadDir = 'public/upload/';	 //设置上传目录
     form.keepExtensions = true;	 //保留后缀
     form.maxFieldsSize = 2 * 1024 * 1024;   //文件大小
 
-    form.parse(req, function(err, fields, files) {
+    form.parse(req, function (err, fields, files) {
+        console.log(req.headers.host);
         if (err) {
             res.send('上传失败');
             return;
@@ -20,20 +23,16 @@ router.post('/', function(req, res){
         var avatarName = uuid.v1() + '.' + extName;
         var newPath = form.uploadDir + avatarName;
 
-        console.log(newPath);
         fs.renameSync(files.upload.path, newPath);  //重命名
         var result = '';
-        var path = 'http://192.168.1.168:3131/upload/'+avatarName;
-        console.log(path);
+        var path = 'http://'+req.headers.host+'/upload/' + avatarName;
         var callback = req.query.CKEditorFuncNum;
-        result += "<script type=\"text/javascript\">";
-        result += "window.location.href='http://127.0.0.1:8040/dist/view/uploaded.html?src="+path+"'";
 
-        //result += "window.parent.CKEDITOR.tools.callFunction(" + callback + ", '" + path + "','')";
-        //result += "console.log(window);console.log('"+path+"')";
-        result += "</script>";
-        console.log(result);
-        res.send(result);
+        var host = req.query.host;
+        var port = req.query.port;
+
+        res.redirect("http://" + host + ":" + port + "/dist/view/uploaded.html?src=" + path + "&fnID=" + callback);
+
     });
 });
 

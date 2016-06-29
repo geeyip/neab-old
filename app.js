@@ -23,8 +23,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
     secret: setting.session_secret,
-    // cookie: {maxAge: 1000*60*30 },
-    // rolling: true,
+    //cookie: {maxAge: 1000*60*15 },
+    //rolling: true,
     resave: false,
     saveUninitialized: false
 }));
@@ -32,13 +32,10 @@ app.use(flash());
 
 app.use(paginate.middleware(15, 100));
 require('./src/mongoose')();
-require('./src/helper')(app, pkg.name);
-
-
 require('./models/security')();
 require('./models/person')();
-
 require('./src/passport')(app);
+require('./src/helper')(app, pkg.name);
 require('./src/logger')(app);
 require('./routes/main')(app);
 require('./src/error')(app);

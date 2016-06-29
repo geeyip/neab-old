@@ -1,0 +1,22 @@
+{% extends 'layout/layout.html' %}
+{% block content %}
+<table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>用户标识</th>
+        <th>用户IP</th>
+        <th>服务器IP</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+    <tr>
+        <td>{{user.userId}}</td>
+        <td>{{user.ip}}</td>
+        <td>{{user.serverIp}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<br><br>
+{% endblock %}
