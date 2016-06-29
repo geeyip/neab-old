@@ -1,15 +1,20 @@
+var index = require('./controller/controller-index');
 var user = require('./controller/controller-users');
 var role = require('./controller/controller-roles');
 var resource = require('./controller/controller-resources');
+
 /**
  * 路由配置入口
  * @param app
  */
 module.exports = function(app){
-    
-    app.use('/', require('./index'));
-    app.use('/profile', require('./profile'));
-    app.use('/upload', require('./upload'));
+
+    app.use('/', require('./router/security'));
+    app.use('/upload', require('./router/upload'));
+
+
+    //首页
+    app.get('/', index.list);
 
     //用户管理
     app.get('/users', user.list);

@@ -2,33 +2,10 @@ var express = require('express');
 var router = express.Router();
 var Account = require('mongoose').model('Account');
 var passport = require('passport');
-var ACL = require('../core/app-acl');
+var ACL = require('../../core/app-acl');
 var async = require('co').wrap;
 var Person = require('mongoose').model('Person');
 
-
-router.get('/', async(function *(req, res, next) {
-    try{
-        var condition = {};
-        if(req.query.username){
-            condition.username = req.query.username;
-        }
-        if(req.query.age1){
-            var age1 =  parseInt(req.query.age1);
-            condition.age = {$gte: age1};
-        }
-        if(req.query.age2){
-            var age =  condition.age || {};
-            age.$lte =  parseInt(req.query.age2);
-            condition.age = age;
-        }
-        console.log(condition);
-        var result = yield Person.paginate(condition, {page: req.query.page,limit: req.query.limit, sort: req.query.sort});
-        res.render('index',{title: '首页',result: result,query: req.query});
-    }catch (err){
-        return next(err);
-    }
-}));
 
 router.get('/login', function(req, res){
     res.render('login', {title:'登录', username : req.flash('username') });
@@ -97,15 +74,44 @@ router.get('/unlock/user/:username', function(req, res){
     });
 });
 
+router.get('/profile', function(req, res){1
+    res.render('profile/profile', {title: '个人信息'});
+});
 
-var userStore = require('./../socket/userStore');
-var socketStore = require('./../socket/socketStore');
+router.get('/profile/password', function(req, res) {
+    Account.findByUsername(req.user.username, function(err, user){
+        res.render('profile/password-modify', {title: '密码修改', user: user})
+    });
+});
+router.post('/profile/password', function(req, res) {
+    var user = new Account(req.user);
+    user.authenticate(req.body.prePassword, function(err, result){
+        if(err) console.log(err);
+        if(result){
+            user.setPassword(req.body.password, function(err, newPassUser){
+                if(err) console.log(err);
+                newPassUser.save(function(err){
+                    if(err) console.log(err);
+                    req.flash('success','密码修改成功');
+                    res.redirect('/profile');
+                });
+            });
+        }else{
+            req.flash('error','原密码错误');
+            res.redirect('/profile/password');
+        }
+    });
+});
+
+
+var userStore = require('./../../socket/userStore');
+var socketStore = require('./../../socket/socketStore');
 
 
 router.get('/online', function(req, res){
     var users = userStore.getUsers();
     var sockets = socketStore.getSockets();
-    res.render('index', { title: '在线用户', users: users, sockets: sockets });
+    res.render('online', { title: '在线用户', users: users, sockets: sockets });
 });
 
 module.exports = router;
