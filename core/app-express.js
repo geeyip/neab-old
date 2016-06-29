@@ -1,3 +1,6 @@
+global._ = require('underscore');
+global.async = require('co').wrap;
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -31,7 +34,8 @@ app.use(session({
 app.use(flash());
 
 app.use(paginate.middleware(15, 100));
-require('./app-mongoose')();
+require('./app-mongoose');
+require('./../api/model/init')();
 require('./app-passport')(app);
 require('./app-helper')(app, pkg.name);
 require('./app-logger')(app);

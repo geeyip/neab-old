@@ -1,12 +1,8 @@
-var express = require('express');
-var router = express.Router();
 var mongoose = require('mongoose');
-var Role = mongoose.model('Role');
 var Account = mongoose.model('Account');
-var ACL  = require('../../core/app-acl');
-var _ = require('underscore');
-var Resource = require('../model/resource');
-var async = require('co').wrap;
+var Role = mongoose.model('Role');
+var Resource = mongoose.model('Resource');
+
 
 //列表
 exports.list = async(function* (req, res, next){
