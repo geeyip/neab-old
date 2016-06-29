@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Account = require('mongoose').model('Account');
 var passport = require('passport');
-var ACL = require('../src/acl');
+var ACL = require('../core/app-acl');
 var async = require('co').wrap;
 var Person = require('mongoose').model('Person');
 

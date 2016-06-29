@@ -3,7 +3,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Resource = mongoose.model('Resource');
 var _ = require('underscore');
-var ACL = require('../src/acl');
+var ACL = require('../../core/app-acl');
 
 exports.list = function(req, res){
     Resource.find(function(err, resources){

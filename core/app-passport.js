@@ -1,7 +1,7 @@
 var passport = require('passport');
-var Account = require('../models/account');
+var Account = require('../api/model/account');
 var Resource = require('../conf/resource.json');
-var ACL = require('./acl');
+var ACL = require('./app-acl');
 
 /**
  * 登录认证配置

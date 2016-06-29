@@ -1,12 +1,12 @@
-var express = require('express');
-var user = require('./users');
-var role = require('./roles');
-var resource = require('./resources');
+var user = require('./controller/controller-users');
+var role = require('./controller/controller-roles');
+var resource = require('./controller/controller-resources');
 /**
  * 路由配置入口
  * @param app
  */
 module.exports = function(app){
+    
     app.use('/', require('./index'));
     app.use('/profile', require('./profile'));
     app.use('/upload', require('./upload'));
@@ -26,7 +26,7 @@ module.exports = function(app){
     app.get('/roles/add/key_check', role.keyCheck);
     app.get('/roles/add/name_check', role.nameCheck);
     app.get('/roles/edit/name_check/:name', role.editNameCheck);
-    app.get('/roles/delete/:key', role.delete);4
+    app.get('/roles/delete/:key', role.delete);
     app.get('/roles/edit/:key', role.intoEdit);
     app.post('/roles/edit/:key', role.submitEdit);
     app.get('/roles/users/:key', role.intoSelectUser);

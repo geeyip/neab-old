@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var app = require('./app');
+var app = require('./core/app-express');
 var debug = require('debug')('neab:server');
 var http = require('http');
 var socket = require('./socket/onlineSocket');
