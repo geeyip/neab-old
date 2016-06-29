@@ -32,8 +32,6 @@ app.use(flash());
 
 app.use(paginate.middleware(15, 100));
 require('./app-mongoose')();
-require('./../api/model/security')();
-require('./../api/model/person')();
 require('./app-passport')(app);
 require('./app-helper')(app, pkg.name);
 require('./app-logger')(app);

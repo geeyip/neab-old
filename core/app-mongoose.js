@@ -12,7 +12,7 @@ module.exports = function(){
         }
     }
     var con = mongoose.connect(setting['db_url'], opts);
-   // console.log(con);
+    
     mongoose.connection.on('error', function(err){
         console.log(err);
     });

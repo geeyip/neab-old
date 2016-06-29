@@ -1,10 +1,10 @@
 var mongoose = require('mongoose');
 var Account = mongoose.model('Account');
-var Role = mongoose.model('Role');
+var Role = require('../model/role');
 var ACL  = require('../../core/app-acl');
 var _ = require('underscore');
 var async = require('co').wrap;
-var Person = require('mongoose').model('Person');
+var Person = require('../model/person');
 
 exports.list = async(function* (req, res, next){
     try{

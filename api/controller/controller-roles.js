@@ -5,7 +5,7 @@ var Role = mongoose.model('Role');
 var Account = mongoose.model('Account');
 var ACL  = require('../../core/app-acl');
 var _ = require('underscore');
-var Resource = mongoose.model('Resource');
+var Resource = require('../model/resource');
 var async = require('co').wrap;
 
 //列表
