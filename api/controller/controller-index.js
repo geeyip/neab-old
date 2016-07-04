@@ -17,7 +17,7 @@ exports.list = async(function* (req, res, next){
             age.$lte =  parseInt(req.query.age2);
             condition.age = age;
         }
-        console.log(condition);
+        //console.log(condition);
         var result = yield Person.paginate(condition, {page: req.query.page,limit: req.query.limit, sort: req.query.sort});
         res.render('index',{title: '首页',result: result,query: req.query});
     }catch (err){

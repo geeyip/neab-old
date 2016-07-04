@@ -15,9 +15,13 @@ exports.list = async(function* (req, res, next){
 });
 
 //进入新增
-exports.intoAdd = function(req, res){
-    res.render('security/role-add', { title: '新增角色'});
-};
+exports.intoAdd =  async(function* (req, res, next){
+    try{
+        res.render('security/role-add', { title: '新增角色'});
+    }catch(err){
+        next(err);
+    }
+});
 
 //提交新增
 exports.submitAdd =  async(function* (req, res, next){
@@ -80,21 +84,25 @@ exports.delete = async(function* (req, res, next){
 });
 
 //进入修改
-exports.intoEdit =  function(req, res, next){
-    Role.findOne({key: req.params.key},function(err,role){
-        if(err) return next(err);
+exports.intoEdit =  async(function*(req, res, next){
+    try{
+        var role = yield Role.findOne({key: req.params.key});
         res.render('security/role-edit', { title: '修改角色', role: role});
-    });
-};
+    }catch(err){
+        next(err);
+    }
+});
 
 //提交修改
-exports.submitEdit = function(req, res, next){
-    Role.update({key: req.params.key},req.body,function(err){
-        if(err) return next(err);
+exports.submitEdit = async(function*(req, res, next){
+    try{
+        yield Role.update({key: req.params.key},req.body);
         req.flash('success','删除成功');
         res.redirect('/roles');
-    });
-};
+    }catch(err){
+        next(err);
+    }
+});
 
 //进入选择用户
 exports.intoSelectUser = async(function* (req, res, next){
