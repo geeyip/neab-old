@@ -9,6 +9,7 @@
   "not_need_grant": [
     "/profile",
     "/profile/password",
-    "/upload/image"
+    "/upload/image",
+    "/online"
   ]
 }

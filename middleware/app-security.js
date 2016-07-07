@@ -1,12 +1,18 @@
+var acl = require('acl');
+var mongoose = require('mongoose');
 var passport = require('passport');
-var Account = require('../api/model/account');
-var Resource = require('../conf/resource.json');
+var Account = mongoose.model('Account');
+var Resource = require('../resource/resource.json');
 
 /**
  * 登录认证配置
  * @param app
  */
 module.exports = function(app){
+
+
+    global.ACL = new acl(new acl.mongodbBackend(mongoose.connection.db, 'acl_'));
+
 
     //passport配置
     app.use(passport.initialize());
@@ -41,11 +47,11 @@ module.exports = function(app){
         if (Resource["not_need_auth"].indexOf(path) == -1
             && Resource["not_need_grant"].indexOf(standardPath) == -1
             && resource != '') {
-            console.log(req.user.username);
+            //console.log(req.user.username);
             var userId = req.user.username;
             ACL.isAllowed(userId, resource, permission, function(err, allowed){
-                console.log('[路径]:'+path+' [方法]:'+req.method+' [资源]:'+resource+' [操作]:' + permission+' [权限]:'+allowed);
-                allowed = true;
+                //console.log('[路径]:'+path+' [方法]:'+req.method+' [资源]:'+resource+' [操作]:' + permission+' [权限]:'+allowed);
+                //allowed = true;
                 if(allowed){
                     next();
                 }else{

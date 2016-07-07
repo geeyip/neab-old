@@ -7,6 +7,7 @@ var FileStreamRotator = require('file-stream-rotator');
  * @param app
  */
 module.exports = function(app){
+    /*
     var logDirectory = path.join(__dirname,'../','log');
     fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
     var accessLogStream = FileStreamRotator.getStream({
@@ -17,13 +18,13 @@ module.exports = function(app){
     });
     logger.token('username', function(req){
         return req.user?req.user.username:'';
-    });
-    //app.use(logger('dev'));
-    app.use(logger(':date :remote-addr :username :method :url :status :response-time',{
-        skip: function(req, res){
-            return req.user == undefined;
-        },
-        stream:accessLogStream
-    }));
+    });*/
+    app.use(logger('dev'));
+    // app.use(logger(':date :remote-addr :username :method :url :status :response-time',{
+    //     skip: function(req, res){
+    //         return req.user == undefined;
+    //     },
+    //     stream:accessLogStream
+    // }));
 
 }

@@ -11,8 +11,7 @@ module.exports = function(app){
 
     app.use('/', require('./router/security'));
     app.use('/upload', require('./router/upload'));
-
-
+    
     //首页
     app.get('/', index.list);
 
@@ -47,5 +46,7 @@ module.exports = function(app){
     app.get('/resources/delete/:key', resource.delete);
     app.get('/resources/edit/:key', resource.intoEdit);
     app.post('/resources/edit/:key', resource.submitEdit);
+
+    
 
 }
