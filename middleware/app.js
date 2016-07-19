@@ -26,7 +26,7 @@ app.use(favicon(path.join(__dirname, '..','public', 'img', 'favicon.ico')));
 //app.use(bodyParser.json());
 //app.use(bodyParser.urlencoded({ extended: false }));
 
-
+//传统上传文件，上传时文件太大而导致无法上传，通过以下方法设置上传最大限制
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
