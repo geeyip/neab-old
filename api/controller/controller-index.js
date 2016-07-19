@@ -19,7 +19,16 @@ exports.list = async(function* (req, res, next){
         }
         //console.log(condition);
         var result = yield Person.paginate(condition, {page: req.query.page,limit: req.query.limit, sort: req.query.sort});
-        res.render('index',{title: '首页',result: result,query: req.query});
+        
+        res.format({
+            json : function () {
+                res.json(result);
+            },
+            html: function () {
+                res.render('index',{title: '首页',result: result,query: req.query});
+            },
+        });
+
     }catch (err){
         return next(err);
     }

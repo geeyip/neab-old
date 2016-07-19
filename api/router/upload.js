@@ -36,6 +36,23 @@ router.post('/', function(req, res) {
     });
 });
 
+//保存base64图片POST方法
+app.post('/base64', function(req, res){
+    //接收前台POST过来的base64
+    var imgData = req.body.imgData;
+    //过滤data:URL
+    var base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");
+    var dataBuffer = new Buffer(base64Data, 'base64');
+    fs.writeFile("out.png", dataBuffer, function(err) {
+        if(err){
+            res.send(err);
+        }else{
+            res.send("保存成功！");
+        }
+    });
+});
+
+
 router.get('/image', function(req, res){
     var images = req.session.images;
     res.render('upload/image', {title: '图片上传',images:images});
