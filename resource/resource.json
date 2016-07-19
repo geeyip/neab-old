@@ -4,7 +4,8 @@
     "/logout",
     "/signup",
     "/signup/user/exits",
-    "/upload"
+    "/upload",
+    "/upload/base64"
   ],
   "not_need_grant": [
     "/profile",
