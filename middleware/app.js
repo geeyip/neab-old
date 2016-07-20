@@ -19,7 +19,7 @@ var app = express();
  * 模板设置
  */
 app.engine('html', swig.renderFile);
-app.set('views', path.join(__dirname, '..', 'api/view'));
+app.set('views', path.join(__dirname, '..', 'web/view'));
 app.set('view engine', 'html');
 
 app.use(favicon(path.join(__dirname, '..','public', 'img', 'favicon.ico')));
