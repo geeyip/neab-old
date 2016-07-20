@@ -13,7 +13,6 @@ module.exports = function(app){
 
     global.ACL = new acl(new acl.mongodbBackend(mongoose.connection.db, 'acl_'));
 
-
     //passport配置
     app.use(passport.initialize());
     app.use(passport.session());
@@ -24,7 +23,7 @@ module.exports = function(app){
     //验证是否已经登录
     app.use(function(req, res, next) {
 
-        if (Resource["not_need_auth"].indexOf(req.path) == -1) {
+        if (Resource["not_need_auth"].indexOf(req.path) == -1 && req.path.indexOf('/api')==-1) {
             if (!req.isAuthenticated || !req.isAuthenticated()) {
                 if (req.session) {
                     req.session.returnTo = req.originalUrl || req.url;
@@ -36,6 +35,7 @@ module.exports = function(app){
     });
 
     //验证当前用户对资源是否有访问权限
+    /*
     app.use(function(req, res, next) {
         var path = req.path;
         var pathArray = path.split('/');
@@ -48,7 +48,7 @@ module.exports = function(app){
             && Resource["not_need_grant"].indexOf(standardPath) == -1
             && resource != '') {
             //console.log(req.user.username);
-            var userId = req.user.username;
+            var userId = req.user?req.user['username']:'';
             ACL.isAllowed(userId, resource, permission, function(err, allowed){
                 //console.log('[路径]:'+path+' [方法]:'+req.method+' [资源]:'+resource+' [操作]:' + permission+' [权限]:'+allowed);
                 //allowed = true;
@@ -65,4 +65,5 @@ module.exports = function(app){
             next();
         }
     });
+    */
 }

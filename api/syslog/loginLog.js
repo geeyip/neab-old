@@ -1,6 +1,6 @@
 var http = require('http');
-var loginUrl = '/api/system/log/in';
-var logoutUrl = '/api/system/log/out';
+var loginUrl = '/api/system/log/in?token=pubservice';
+var logoutUrl = '/api/system/log/out?token=pubservice';
 
 /**
  * 记录登入日志

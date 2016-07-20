@@ -5,7 +5,8 @@
     "/signup",
     "/signup/user/exits",
     "/upload",
-    "/upload/base64"
+    "/upload/base64",
+    "/version"
   ],
   "not_need_grant": [
     "/profile",

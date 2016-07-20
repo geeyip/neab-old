@@ -1,0 +1,54 @@
+{% extends '../layout/layout.html' %}
+{% block path %}
+<ol class="breadcrumb">
+    <li><a href="/"><i class="glyphicon glyphicon-home"></i></a></li>
+    <li><a href="/client">客户端</a></li>
+    <li class="active">{{title}}</li>
+</ol>
+{% endblock %}
+{% block content %}
+<div class="panel panel-default">
+    <div class="panel-body">
+        <form class="col-sm-10 form-horizontal" data-parsley-validate id="registerForm" method="post" >
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">部署地代码</label>
+                    <div class="col-sm-7">
+                        {{client.key}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">部署地名称</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="name"  name="name"  placeholder="部署地名称" required=""  value="{{client.name}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">所属地区</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="pname"  name="pname"  placeholder="所属地区" required="" value="{{client.pname}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">服务地址</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="serverUrl"  name="serverUrl"  placeholder="服务地址" required=""  value="{{client.serverUrl}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">刑技地址</label>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" id="xjptUrl"  name="xjptUrl"  placeholder="刑技地址" required="" value="{{client.xjptUrl}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-7">
+                        <a href="/client" class="btn btn-default">取消</a>
+                        <button type="submit" class="btn btn-primary">修改</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -2,7 +2,7 @@ var index = require('./controller/controller-index');
 var user = require('./controller/controller-users');
 var role = require('./controller/controller-roles');
 var resource = require('./controller/controller-resources');
-
+var client = require('./controller/controller-client');
 /**
  * 路由配置入口
  * @param app
@@ -11,7 +11,7 @@ module.exports = function(app){
 
     app.use('/', require('./router/security'));
     app.use('/upload', require('./router/upload'));
-    
+
     //首页
     app.get('/', index.list);
 
@@ -47,6 +47,15 @@ module.exports = function(app){
     app.get('/resources/edit/:key', resource.intoEdit);
     app.post('/resources/edit/:key', resource.submitEdit);
 
-    
+    //客户端
+    app.get('/client', client.list);
+    app.get('/client/add', client.intoAdd);
+    app.get('/client/add/key_check', client.keyCheck);
+    app.post('/client/add', client.add);
+    app.get('/client/edit/:key', client.intoEdit);
+    app.post('/client/edit/:key', client.edit);
+    app.get('/client/delete/:key', client.delete);
+
+
 
 }

@@ -12,9 +12,15 @@ app.use(function(req, res, next) {
 
 app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: err
-    });
+    if(req.path.indexOf('/api')==-1){
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
+    }else{
+        res.writeHead(err.status);
+        res.end();
+    }
+
 });
 }

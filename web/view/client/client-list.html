@@ -1,0 +1,30 @@
+{% extends '../layout/layout.html' %}
+{% block content %}
+<legend>客户端部署地列表</legend>
+<table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>部署地代码</th>
+        <th>部署地名称</th>
+        <th>服务地址</th>
+        <th>刑技地址</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for client in clients %}
+    <tr>
+        <td>{{client.key}}</td>
+        <td>{{client.pname}}{{client.name}}</td>
+        <td>{{client.serverUrl}}</td>
+        <td>{{client.xjptUrl}}</td>
+        <td>
+            <a href="/client/edit/{{client.key}}" class="btn btn-sm btn-primary">修改</a>
+            <a href="/client/delete/{{client.key}}" onclick="if(confirm('确定删除?')==false)return false;" class="btn btn-sm btn-danger">删除</a>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<a href="/client/add" class="btn btn-primary">新增</a>
+{% endblock %}
