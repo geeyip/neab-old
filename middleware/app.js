@@ -39,11 +39,11 @@ app.use(flash());
 
 app.use(paginate.middleware(15, 100));
 require('./app-mongoose');
-require('./../api/model/initialize')();
+require('./../web/model/initialize')();
 require('./app-security')(app);
 require('./app-helper')(app, pkg.name);
 require('./app-logger')(app);
-require('./../api/route')(app);
+require('./../web/route')(app);
 require('./app-error')(app);
 
 module.exports = app;
