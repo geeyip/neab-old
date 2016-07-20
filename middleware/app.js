@@ -44,6 +44,7 @@ require('./app-security')(app);
 require('./app-helper')(app, pkg.name);
 require('./app-logger')(app);
 require('./../web/route')(app);
+require('./../api/api')(app);
 require('./app-error')(app);
 
 module.exports = app;
