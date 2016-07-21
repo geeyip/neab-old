@@ -3,6 +3,7 @@ var user = require('./controller/controller-users');
 var role = require('./controller/controller-roles');
 var resource = require('./controller/controller-resources');
 var client = require('./controller/controller-client');
+var online = require('./controller/controller-online');
 /**
  * 路由配置入口
  * @param app
@@ -56,6 +57,9 @@ module.exports = function(app){
     app.post('/client/edit/:key', client.edit);
     app.get('/client/delete/:key', client.delete);
 
+    //在线
+    app.get('/online/users', online.users);
+    app.get('/online/logs', online.logs);
 
 
 }

@@ -4,4 +4,5 @@ module.exports = function () {
     require('./resource');
     require('./role');
     require('./client');
+    require('./entry');
 }

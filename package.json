@@ -17,6 +17,7 @@
     "express-session": "^1.13.0",
     "file-stream-rotator": "0.0.6",
     "formidable": "^1.0.17",
+    "moment": "^2.14.1",
     "mongodb": "^2.1.18",
     "mongoose": "^4.4.20",
     "mongoose-paginate": "^5.0.0",

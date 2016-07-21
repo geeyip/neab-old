@@ -1,0 +1,56 @@
+{% extends '../layout/layout.html' %}
+{% block content %}
+<legend>登录登出日志</legend>
+<div class="panel">
+    <div class="panel-body">
+        <form class="col-sm-10 form-horizontal" action="/online/logs" method="get" role="search">
+
+                <div class="row">
+                    <div class="col-sm-2 text-right">
+                        <label>用户标识</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="text" name="userId"  value="{{query.userId}}">
+                    </div>
+                    <div class="col-sm-2 text-right">
+                        <label>登录时间</label>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="text" name="dateBegin"  value="{{query.dateBegin}}"  onclick="WdatePicker({maxDate:'%y-%M-%d'})"  style="width: 80px;">
+                        ~ <input type="text" name="dateEnd" value="{{query.dateEnd}}" onclick="WdatePicker({maxDate:'%y-%M-%d'})" style="width: 80px;">
+
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn btn-info">查询</button>
+                    </div>
+                </div>
+
+        </form>
+    </div>
+</div>
+<table class="table table-bordered table-hover">
+    <thead>
+    <tr>
+        <th>用户标识</th>
+        <th>姓名</th>
+        <th>单位</th>
+        <th>IP</th>
+        <th>登录时间</th>
+        <th>登出时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for log in result.docs %}
+    <tr>
+        <td>{{log.userId}}</td>
+        <td>{{log.userName}}</td>
+        <td>{{log.userUnit}}</td>
+        <td>{{log.ip}}</td>
+        <td>{{log.logTime1}}</td>
+        <td>{{log.offTime1}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{{ createPagination(result.pages,result.page) }}
+{% endblock %}
