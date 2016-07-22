@@ -28,6 +28,8 @@ module.exports = function(server){
                 //用户信息附加到socket上
                 socket['ip'] = ip;
                 socket['userId'] = userId;
+                socket['userName'] = userInfo.userName;
+                socket['userUnit'] = userInfo.userUnit;
                 socket['serverIp'] = userInfo.serverIp;
                 socket['serverPort'] = userInfo.serverPort;
 

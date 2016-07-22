@@ -58,8 +58,8 @@ function login2DB(obj) {
 
     var log = {
         userId: obj.userId,
-        userName: obj.userId,
-        userUnit: obj.userId,
+        userName: obj.userName,
+        userUnit: obj.userUnit,
         ip: obj.ip,
         logTime: new Date(),
         offTime: ''
