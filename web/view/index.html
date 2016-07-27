@@ -51,19 +51,26 @@
 <!--<br><br>-->
 
 <div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">客户端</h3>
-    </div>
-    <div class="panel-body">
-        <a href="/client" class="btn btn-info">部署地管理</a>
-        <hr>
- <h4>客户端API</h4>
+<div class="panel-heading">
+<h3 class="panel-title">API</h3>
+</div>
+<div class="panel-body">
+    <h4>客户端API</h4>
 <pre>
 GET /api/client/version         //获取最新版本号
 GET /api/client/version/:name   //下载新版本更新包
 GET /api/client/servers         //获取部署地配置
 </pre>
-
-    </div>
+    <h4>在线API</h4>
+<pre>
+GET /api/online/users         //获取在线用户数据
+GET /api/online/logs           //登录登出日志
+</pre>
+    <h4>上传API</h4>
+<pre>
+POST /api/upload                //上传表单文件
+POST /api/upload/base64         //上传base64编码图片
+</pre>
+</div>
 </div>
 {% endblock %}

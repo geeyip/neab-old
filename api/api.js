@@ -9,4 +9,5 @@ module.exports = function(app){
 
     app.use('/api/upload', require('./upload/upload'));
 
+    app.use('/api/online', require('./online/index'));
 }

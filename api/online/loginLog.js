@@ -1,4 +1,6 @@
 var http = require('http');
+var mongoose = require('mongoose');
+var Entry = mongoose.model('Entry');
 var loginUrl = '/api/system/log/in?token=pubservice';
 var logoutUrl = '/api/system/log/out?token=pubservice';
 
@@ -7,7 +9,8 @@ var logoutUrl = '/api/system/log/out?token=pubservice';
  * @param userInfo
  */
 exports.login = function (userInfo) {
-    httpRequest(userInfo, loginUrl);
+    //httpRequest(userInfo, loginUrl);
+    login2DB(userInfo);
 }
 
 /**
@@ -15,7 +18,8 @@ exports.login = function (userInfo) {
  * @param socket
  */
 exports.logout = function (socket) {
-    httpRequest(socket, logoutUrl);
+   // httpRequest(socket, logoutUrl);
+    logout2DB(socket);
 }
 
 /**
@@ -48,4 +52,30 @@ function httpRequest(obj, url){
     });
     req.write(content);
     req.end();
+}
+
+function login2DB(obj) {
+
+    var log = {
+        userId: obj.userId,
+        userName: obj.userName,
+        userUnit: obj.userUnit,
+        ip: obj.ip,
+        logTime: new Date(),
+        offTime: ''
+    };
+
+    logout2DB(obj);
+    var entry = new Entry(log);
+    entry.save();
+}
+
+function logout2DB(obj) {
+    Entry.update({
+        userId: obj.userId,
+        ip: obj.ip,
+        offTime: ''
+    },{$set: {offTime: new Date()}}, { multi: true }, function (err) {
+        if(err) console.log(err);
+    });
 }

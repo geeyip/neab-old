@@ -102,15 +102,4 @@ router.post('/profile/password', function(req, res) {
     });
 });
 
-
-// var userStore = require('./../../socket/userStore');
-// var socketStore = require('./../../socket/socketStore');
-//
-//
-// router.get('/online', function(req, res){
-//     var users = userStore.getUsers();
-//     var sockets = socketStore.getSockets();
-//     res.render('online', { title: '在线用户', users: users, sockets: sockets });
-// });
-
 module.exports = router;
