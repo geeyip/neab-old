@@ -57,4 +57,57 @@ router.post('/base64', function(req, res){
     });
 });
 
+router.post('/file', function(req, res) {
+
+    var resolvePath = path.resolve('.');//绝对路径
+    var childFileName = req.query.typeId;
+    var uploadFilePath = 'public/upload/file/';
+    var form = new formidable.IncomingForm();   //创建上传表单
+
+    if(!fs.existsSync(resolvePath + '/public/upload/file')){
+        fs.mkdirSync(resolvePath + '/public/upload/file');
+    }
+
+    if(typeof childFileName != 'undefined'){
+        if(!fs.existsSync(resolvePath + '/public/upload/file/' + childFileName)){
+            fs.mkdirSync(resolvePath + '/public/upload/file/' + childFileName);
+        }
+        uploadFilePath = uploadFilePath +childFileName+'/';
+    }
+
+    console.log('uploadPath:'+uploadFilePath);
+
+    form.encoding = 'utf-8';		//设置编辑
+    form.uploadDir = uploadFilePath;	 //设置上传目录
+    form.keepExtensions = true;	 //保留后缀
+    form.maxFieldsSize = 2 * 1024 * 1024;   //文件大小
+
+    form.parse(req, function (err, fields, files) {
+        if (err) {
+            res.send('上传失败');
+            return;
+        }
+
+        var newPath = form.uploadDir + files.upload.name;
+        var host = req.query.host;
+        var port = req.query.port;
+        var callback = req.query.CKEditorFuncNum;
+
+        fs.renameSync(files.upload.path, newPath);
+
+        res.redirect("http://" + host + ":" + port + "/dist/view/uploaded.html?typeId=" + childFileName + "&fnID=" + callback);
+    });
+});
+
+router.get('/download/:id/:name', function(req, res, next) {
+    var url = path.join(__dirname, '../..' ,'public/upload/file/'+req.params.id,req.params.name);
+    console.log(url);
+    res.download(url, function(err){
+        if (err) {
+            console.log(err);
+            res.end("404");
+        }
+    });
+});
+
 module.exports = router;
