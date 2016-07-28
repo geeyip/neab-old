@@ -101,7 +101,6 @@ router.post('/file', function(req, res) {
 
 router.get('/download/:id/:name', function(req, res, next) {
     var url = path.join(__dirname, '../..' ,'public/upload/file/'+req.params.id,req.params.name);
-    console.log(url);
     res.download(url, function(err){
         if (err) {
             console.log(err);
