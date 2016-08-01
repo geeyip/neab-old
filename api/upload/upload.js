@@ -31,8 +31,9 @@ router.post('/', function(req, res) {
 
         var host = req.query.host;
         var port = req.query.port;
+        var project = req.query.project;
 
-        res.redirect("http://" + host + ":" + port + "/dist/view/uploaded.html?src=" + path + "&fnID=" + callback);
+        res.redirect("http://" + host + ":" + port + "/" + project + "/dist/view/uploaded.html?src=" + path + "&fnID=" + callback);
 
     });
 });
@@ -91,11 +92,12 @@ router.post('/file', function(req, res) {
         var newPath = form.uploadDir + files.upload.name;
         var host = req.query.host;
         var port = req.query.port;
+        var project = req.query.project;
         var callback = req.query.CKEditorFuncNum;
 
         fs.renameSync(files.upload.path, newPath);
 
-        res.redirect("http://" + host + ":" + port + "/dist/view/uploaded.html?typeId=" + childFileName + "&fnID=" + callback);
+        res.redirect("http://" + host + ":" + port + "/" + project + "/dist/view/uploaded.html?typeId=" + childFileName + "&fnID=" + callback);
     });
 });
 
