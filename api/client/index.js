@@ -12,9 +12,9 @@ var Client = mongoose.model('Client');
  */
 router.get('/version', function(req, res, next) {
     try{
-        var confPath = path.join(__dirname,'resource/version.json');
+        var confPath = path.join(__dirname,'resource/report/report.json');
         delete require.cache[confPath];
-        var pkg = require('./resource/version.json');
+        var pkg = require('./resource/report/report.json');
         res.json(pkg.version);
     }catch (e){
         res.json('0.0.0');
@@ -27,7 +27,7 @@ router.get('/version', function(req, res, next) {
  * 下载升级包
  */
 router.get('/version/:name', function(req, res, next) {
-    var url = path.join(__dirname,'resource',req.params.name);
+    var url = path.join(__dirname,'resource/report',req.params.name);
     var flag = fs.existsSync(url);
     if(flag){
         res.download(url, function(err){
