@@ -1,6 +1,6 @@
 
 /**
- * 路由配置入口
+ * api配置入口
  * @param app
  */
 module.exports = function(app){
