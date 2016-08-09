@@ -78,6 +78,6 @@ function logout2DB(obj, cb) {
         offTime: ''
     },{$set: {offTime: new Date()}}, { multi: true }, function (err) {
         if(err) console.log(err);
-        cb();
+        if(typeof cb == 'function') cb();
     });
 }
