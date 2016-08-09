@@ -65,17 +65,19 @@ function login2DB(obj) {
         offTime: ''
     };
 
-    logout2DB(obj);
-    var entry = new Entry(log);
-    entry.save();
+    logout2DB(obj, function () {
+        var entry = new Entry(log);
+        entry.save();
+    });
 }
 
-function logout2DB(obj) {
+function logout2DB(obj, cb) {
     Entry.update({
         userId: obj.userId,
         ip: obj.ip,
         offTime: ''
     },{$set: {offTime: new Date()}}, { multi: true }, function (err) {
         if(err) console.log(err);
+        cb();
     });
 }
