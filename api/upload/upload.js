@@ -6,14 +6,14 @@ var fs = require('fs');
 var path = require('path');
 
 router.post('/', function(req, res) {
-    console.log(req.headers.host);
+    // console.log(req.headers.host);
     var form = new formidable.IncomingForm();   //创建上传表单
-    form.encoding = 'utf-8';		//设置编辑
+    // form.encoding = 'utf-8';		//设置编辑
     form.uploadDir = 'public/upload/';	 //设置上传目录
-    form.keepExtensions = true;	 //保留后缀
-    form.maxFieldsSize = 2 * 1024 * 1024;   //文件大小
+    // form.keepExtensions = true;	 //保留后缀
+    // form.maxFieldsSize = 2 * 1024 * 1024;   //文件大小
 
-    form.parse(req, function (err, fields, files) {
+    /*form.parse(req, function (err, fields, files) {
         console.log(req.headers.host);
         if (err) {
             res.send('上传失败');
@@ -35,6 +35,25 @@ router.post('/', function(req, res) {
 
         res.redirect("http://" + host + ":" + port + "/" + project + "/dist/view/uploaded.html?src=" + path + "&fnID=" + callback);
 
+    });*/
+
+    /* modify by zmj 改写图片上传方式 用ajax异步上传*/
+
+    form.parse(req, function(err, fields, files) {
+        try {
+            var fileInput = files['ckFile'];
+            var filePath = fileInput.path;
+            var fileName = fileInput.name;
+            var avatarName = uuid.v1() + '.' + fileName.split('.')[1];
+            if (fileInput.size > 2 * 1024 * 1024) {
+                res.json({result: 0, msg: '文件大小超过限制'});
+            } else {
+                fs.renameSync(filePath, 'public/upload/' + avatarName);
+                res.json({result: 1, data: 'http://'+req.headers.host+'/upload/' + avatarName}); //result=1居然就无法触发ajax回调成功,我也是醉了
+            }
+        }catch(e){
+            res.json({result:1,msg:String(e)})
+        }
     });
 });
 
@@ -75,15 +94,15 @@ router.post('/file', function(req, res) {
         }
         uploadFilePath = uploadFilePath +childFileName+'/';
     }
-
-    console.log('uploadPath:'+uploadFilePath);
-
-    form.encoding = 'utf-8';		//设置编辑
+    //
+    // console.log('uploadPath:'+uploadFilePath);
+    //
+    // form.encoding = 'utf-8';		//设置编辑
     form.uploadDir = uploadFilePath;	 //设置上传目录
-    form.keepExtensions = true;	 //保留后缀
-    form.maxFieldsSize = 2 * 1024 * 1024;   //文件大小
+    // form.keepExtensions = true;	 //保留后缀
+    // form.maxFieldsSize = 2 * 1024 * 1024;   //文件大小
 
-    form.parse(req, function (err, fields, files) {
+    /*form.parse(req, function (err, fields, files) {
         if (err) {
             res.send('上传失败');
             return;
@@ -94,10 +113,33 @@ router.post('/file', function(req, res) {
         var port = req.query.port;
         var project = req.query.project;
         var callback = req.query.CKEditorFuncNum;
+        var fileLocation = req.query.fileLocation;
 
         fs.renameSync(files.upload.path, newPath);
 
-        res.redirect("http://" + host + ":" + port + "/" + project + "/dist/view/uploaded.html?typeId=" + childFileName + "&fnID=" + callback);
+        if(host != '') {
+            res.redirect("http://" + host + ":" + port + "/" + project + "/dist/view/uploaded.html?typeId=" + childFileName + "&fnID=" + callback);
+        }else{
+            res.redirect(fileLocation + "view/uploaded.html?typeId=" + childFileName + "&fnID=" + callback);
+        }
+    });*/
+
+    form.parse(req, function(err, fields, files) {
+        try {
+            var fileInput = files['cropFile'];
+            var filePath = fileInput.path;
+            var fileName = fileInput.name;
+            var newPath = uploadFilePath + fileName;
+            // var saveName = fileName.replace('.', new Date().getTime() + '.');
+            if (fileInput.size > 50 * 1024 * 1024) {
+                res.json({result: 0, msg: '文件大小超过限制'});
+            } else {
+                fs.renameSync(filePath, newPath);
+                res.json({result: 1, data: childFileName}); //result=1居然就无法触发ajax回调成功,我也是醉了
+            }
+        }catch(e){
+            res.json({result:1,msg:String(e)})
+        }
     });
 });
 
