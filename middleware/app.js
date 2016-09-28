@@ -9,7 +9,6 @@ var bodyParser = require('body-parser');
 var swig = require('swig');
 var pkg = require('./../package.json');
 var session = require('express-session');
-var setting = require('../resource/setting.json');
 var flash = require('connect-flash');
 var paginate = require('express-paginate');
 
@@ -47,7 +46,7 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
  * session配置
  */
 app.use(session({
-    secret: setting.session_secret,
+    secret: '7f3d32ea866df20a2bc45b895cab5179fc4e7a9b640b729dc526d9e9c77e5ce7',
     //cookie: {maxAge: 1000*60*15 },
     //rolling: true,
     resave: false,

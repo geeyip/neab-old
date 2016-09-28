@@ -8,12 +8,12 @@ var app = require('./middleware/app');
 var debug = require('debug')('neab:server');
 var http = require('http');
 var socket = require('./api/online/onlineSocket');
-
+var setting = require('./package.json');
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || setting.port);
 
 /**
  * Create HTTP server.

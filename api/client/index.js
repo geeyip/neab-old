@@ -92,9 +92,6 @@ router.get('/one/version/:name', function(req, res, next) {
         err.status = 404;
         next(err);
     }
-
 });
-
-
 
 module.exports = router;

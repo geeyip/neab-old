@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var setting = require('../resource/setting.json');
+var setting = require('../package.json');
 
 var opts = {
     db: { native_parser: true },
